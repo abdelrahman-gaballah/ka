@@ -1,0 +1,1 @@
+{"language": "TEMPLATE", "categories": {"example": {"name": "Category", "commands": {"cmd": {"cmd": "echo hello", "description": "example"}}}}
