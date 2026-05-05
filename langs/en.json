@@ -11,7 +11,7 @@
         "space folder": { "cmd": "du -sh {}", "description": "Show folder size", "args": 1 },
         "ram": { "cmd": "free -h", "description": "Show RAM usage", "args": 0 },
         "ram detailed": { "cmd": "free -h -t", "description": "Show RAM with total", "args": 0 },
-        "cmd": "sh -c \"top -bn1 | grep 'Cpu(s)'\"", "description": "Show CPU usage", "args": 0 },
+        "cpu": { "cmd": "sh -c \"top -bn1 | grep 'Cpu(s)'\"", "description": "Show CPU usage", "args": 0 },
         "cpu cores": { "cmd": "nproc", "description": "Show number of CPU cores", "args": 0 },
         "cpu info": { "cmd": "lscpu | grep 'Model name'", "description": "Show CPU model", "args": 0 },
         "battery": { "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to empty'", "description": "Show battery status", "args": 0 },
