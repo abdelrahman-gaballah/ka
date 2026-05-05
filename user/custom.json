@@ -1,11 +1,121 @@
 {
   "categories": {
-    "example_category": {
-      "name": "My Custom Commands",
+    "fixed_commands": {
+      "name": "System Information",
       "commands": {
-        "example": {
-          "cmd": "echo 'Hello from Ka!'",
-          "description": "Example custom command - edit or delete this",
+        "cpu": {
+          "cmd": "bash -c \"top -bn2 | grep 'Cpu(s)' | tail -1 | awk '{print \\$2 + \\$4}'\"",
+          "description": "Show CPU usage percentage",
+          "args": 0
+        },
+        "cpu info": {
+          "cmd": "bash -c \"lscpu | grep 'Model name'\"",
+          "description": "Show CPU model",
+          "args": 0
+        },
+        "battery": {
+          "cmd": "bash -c \"upower -i \\$(upower -e | grep BAT) | grep -E 'percentage|to empty'\"",
+          "description": "Show battery status",
+          "args": 0
+        },
+        "battery full": {
+          "cmd": "bash -c \"upower -i \\$(upower -e | grep BAT) | grep -E 'percentage|to full'\"",
+          "description": "Show time to full charge",
+          "args": 0
+        },
+        "os": {
+          "cmd": "bash -c \"cat /etc/os-release | grep PRETTY_NAME | cut -d= -f2\"",
+          "description": "Show OS name",
+          "args": 0
+        },
+        "temperature": {
+          "cmd": "bash -c \"sensors | grep 'Core 0'\"",
+          "description": "Show CPU temperature",
+          "args": 0
+        },
+        "memory hog": {
+          "cmd": "bash -c \"ps aux --sort=-%mem | head -10\"",
+          "description": "Top memory users",
+          "args": 0
+        },
+        "cpu hog": {
+          "cmd": "bash -c \"ps aux --sort=-%cpu | head -10\"",
+          "description": "Top CPU users",
+          "args": 0
+        },
+        "processes user": {
+          "cmd": "bash -c \"ps aux | grep {}\"",
+          "description": "Processes for user",
+          "args": 1
+        },
+        "find text": {
+          "cmd": "bash -c \"grep -r {} .\"",
+          "description": "Search text in files",
+          "args": 1
+        },
+        "ip location": {
+          "cmd": "bash -c \"curl -s ipinfo.io/{}\"",
+          "description": "IP geolocation",
+          "args": 1
+        },
+        "ports": {
+          "cmd": "bash -c \"ss -tuln\"",
+          "description": "Show open ports",
+          "args": 0
+        },
+        "ports listening": {
+          "cmd": "bash -c \"ss -tln\"",
+          "description": "Show listening ports",
+          "args": 0
+        },
+        "update": {
+          "cmd": "bash -c \"sudo apt update && sudo apt upgrade -y\"",
+          "description": "Full system update",
+          "args": 0
+        },
+        "clean": {
+          "cmd": "bash -c \"sudo apt autoremove -y && sudo apt autoclean\"",
+          "description": "Clean system",
+          "args": 0
+        },
+        "git log": {
+          "cmd": "bash -c \"git log --oneline -10\"",
+          "description": "Git log last 10",
+          "args": 0
+        },
+        "docker ps": {
+          "cmd": "bash -c \"docker ps\"",
+          "description": "List containers",
+          "args": 0
+        },
+        "docker ps all": {
+          "cmd": "bash -c \"docker ps -a\"",
+          "description": "List all containers",
+          "args": 0
+        },
+        "weather": {
+          "cmd": "bash -c \"curl -s wttr.in/{}\"",
+          "description": "Weather forecast",
+          "args": 1
+        },
+        "weather today": {
+          "cmd": "bash -c \"curl -s wttr.in/{}?format=3\"",
+          "description": "Brief weather",
+          "args": 1
+        },
+        "timer": {
+          "cmd": "bash -c \"sleep {} && paplay /usr/share/sounds/freedesktop/complete.oga\"",
+          "description": "Set timer in seconds",
+          "args": 1
+        },
+        "timer minutes": {
+          "cmd": "bash -c \"sleep {}m && paplay /usr/share/sounds/freedesktop/complete.oga\"",
+          "description": "Set timer in minutes",
+          "args": 1
+        },
+        "history": {
+          "cmd": "bash -c \"history | tail -20\"",
+          "description": "Last 20 commands",
           "args": 0
         }
       }
