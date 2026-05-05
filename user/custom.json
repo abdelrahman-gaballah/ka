@@ -4,10 +4,6 @@
       "name": "System Information",
       "commands": {
         "cpu": {
-<<<<<<< Updated upstream
-          "cmd": "top -bn2 | grep 'Cpu(s)' | tail -1 | awk '{print $2 + $4}'",
-          "description": "Show CPU usage percentage",
-=======
           "cmd": "bash -c \"top -bn2 | grep 'Cpu(s)' | tail -1 | awk '{print \\$2 + \\$4}'\"",
           "description": "Show CPU usage percentage",
           "args": 0
@@ -120,7 +116,6 @@
         "history": {
           "cmd": "bash -c \"history | tail -20\"",
           "description": "Last 20 commands",
->>>>>>> Stashed changes
           "args": 0
         }
       }
