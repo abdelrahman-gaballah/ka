@@ -7,7 +7,7 @@
       "commands": {
         "space": { "cmd": "df -h", "description": "Description here", "args": 0 },
         "ram": { "cmd": "free -h", "description": "Description here", "args": 0 },
-        "cpu": { "cmd": "top -bn1 | grep 'Cpu(s)'", "description": "Description here", "args": 0 },
+        "cmd": "sh -c \"top -bn1 | grep 'Cpu(s)'\"", "description": "Description here", "args": 0 },
         "battery": { "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to empty'", "description": "Description here", "args": 0 },
         "uptime": { "cmd": "uptime -p", "description": "Description here", "args": 0 },
         "os": { "cmd": "cat /etc/os-release | grep PRETTY_NAME | cut -d= -f2", "description": "Description here", "args": 0 },
