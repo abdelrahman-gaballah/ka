@@ -1,1 +1,13 @@
-{}
+{
+  "categories": {
+    "example_category": {
+      "commands": {
+        "example": {
+          "cmd": "echo 'This is an example override. Edit or delete this file to customize built-in commands.'",
+          "description": "Example of overriding a built-in command",
+          "args": 0
+        }
+      }
+    }
+  }
+}

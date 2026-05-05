@@ -1,1 +1,46 @@
-{"sample": "data"}
+{
+  "language": "sample",
+  "name": "Sample Language for Testing",
+  "categories": {
+    "test_category": {
+      "name": "Test Commands",
+      "commands": {
+        "test": {
+          "cmd": "echo 'test command executed'",
+          "description": "A test command for unit testing",
+          "args": 0
+        },
+        "test_echo": {
+          "cmd": "echo {}",
+          "description": "Echo the argument",
+          "args": 1
+        },
+        "test_copy": {
+          "cmd": "cp {} {}",
+          "description": "Copy file test",
+          "args": 2
+        },
+        "test_ls": {
+          "cmd": "ls -la",
+          "description": "List files for testing",
+          "args": 0
+        }
+      }
+    },
+    "system_sample": {
+      "name": "Sample System Commands",
+      "commands": {
+        "test_space": {
+          "cmd": "df -h",
+          "description": "Mock disk space",
+          "args": 0
+        },
+        "test_ram": {
+          "cmd": "free -h",
+          "description": "Mock RAM usage",
+          "args": 0
+        }
+      }
+    }
+  }
+}

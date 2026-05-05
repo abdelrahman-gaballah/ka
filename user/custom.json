@@ -1,1 +1,14 @@
-{}
+{
+  "categories": {
+    "example_category": {
+      "name": "My Custom Commands",
+      "commands": {
+        "example": {
+          "cmd": "echo 'Hello from Ka!'",
+          "description": "Example custom command - edit or delete this",
+          "args": 0
+        }
+      }
+    }
+  }
+}

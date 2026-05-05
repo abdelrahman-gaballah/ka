@@ -1,3 +1,64 @@
-/__pycache__/
-/logs/
-/discovered/
+# Ka - Easy Linux Commands
+# Git ignore file
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Ka specific
+logs/
+*.log
+discovered/cache.json
+discovered/programs.json
+
+# User data (keep structure but ignore content)
+user/custom.json
+user/modified.json
+user/aliases.json
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
+
+# OS files
+Thumbs.db
+.directory
+
+# Secrets
+*.env
+.credentials
+.token
+
+# Build
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Backup
+*.backup
+*.old

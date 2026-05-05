@@ -1,2 +1,155 @@
 name: Release
-on: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+        body: |
+          ## Changes in this release
+          - Add your changes here
+          
+          ## Installation
+          ```bash
+          git clone https://github.com/abdelrahman-gaballah/ka.git
+          cd ka
+          ./scripts/install.sh
+          ```
+
+  build-and-upload:
+    name: Build and Upload Assets
+    runs-on: ubuntu-latest
+    needs: create-release
+    strategy:
+      matrix:
+        include:
+          - name: ka-linux-x86_64
+            os: ubuntu-latest
+          - name: ka-source
+            os: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+
+    - name: Build executable (Linux)
+      if: matrix.name == 'ka-linux-x86_64'
+      run: |
+        pyinstaller --onefile --name ka ka
+        mv dist/ka dist/ka-linux-x86_64
+
+    - name: Create source archive
+      if: matrix.name == 'ka-source'
+      run: |
+        tar -czvf ka-source.tar.gz --exclude='.git' --exclude='__pycache__' --exclude='venv' .
+        zip -r ka-source.zip . -x '*.git*' '*__pycache__*' '*venv*'
+
+    - name: Upload Release Asset (Linux)
+      if: matrix.name == 'ka-linux-x86_64'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.create-release.outputs.upload_url }}
+        asset_path: ./dist/ka-linux-x86_64
+        asset_name: ka-linux-x86_64
+        asset_content_type: application/octet-stream
+
+    - name: Upload Release Asset (Source Tar)
+      if: matrix.name == 'ka-source'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.create-release.outputs.upload_url }}
+        asset_path: ./ka-source.tar.gz
+        asset_name: ka-source.tar.gz
+        asset_content_type: application/gzip
+
+    - name: Upload Release Asset (Source Zip)
+      if: matrix.name == 'ka-source'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.create-release.outputs.upload_url }}
+        asset_path: ./ka-source.zip
+        asset_name: ka-source.zip
+        asset_content_type: application/zip
+
+  publish-to-pypi:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    needs: build-and-upload
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build
+
+    - name: Build package
+      run: |
+        python -m build
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
+
+  update-homebrew:
+    name: Update Homebrew Formula
+    runs-on: ubuntu-latest
+    needs: build-and-upload
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Get version
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+    - name: Update Homebrew tap
+      uses: dawidd6/action-homebrew-bump-formula@v3
+      with:
+        token: ${{ secrets.HOMEBREW_TOKEN }}
+        formula: ka
+        tap: abdelrahman-gaballah/homebrew-ka
+        commit_message: "ka ${{ steps.get_version.outputs.VERSION }}"

@@ -1,1 +1,16 @@
-# No dependencies yet
+# Ka - Easy Linux Commands
+# Python dependencies
+
+# Core functionality (no external dependencies required)
+# Python 3.6+ standard library only
+
+# Development dependencies
+pytest>=7.0.0
+pytest-cov>=4.0.0
+pylint>=2.15.0
+black>=22.0.0
+
+# Optional dependencies
+# googletrans==4.0.0rc1  # For automatic translation features
+# pyfiglet>=0.8.post1    # For ASCII art generation
+# colorama>=0.4.6        # For Windows color support (not needed on Linux)

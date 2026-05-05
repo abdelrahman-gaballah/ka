@@ -1,1 +1,10 @@
-{"language": "en", "auto_discover": false}
+{
+  "language": "en",
+  "auto_discover": true,
+  "confirm_dangerous": true,
+  "use_colors": true,
+  "max_output_lines": 50,
+  "log_level": "info",
+  "history_size": 100,
+  "default_timeout": 30
+}
