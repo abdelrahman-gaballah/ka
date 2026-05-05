@@ -25,20 +25,20 @@ class CommandExecutor:
         """
         self.dry_run = dry_run
     
-    def build_command(self, cmd_template: str, args: List[str]) -> Tuple[Optional[List[str]], str]:
+    def build_command(self, cmd_template: str, args: List[str]) -> Tuple[Optional[str], str]:
         """
         Build the actual command by substituting {} placeholders with arguments.
+        Returns a single string command that can be used with shell=True.
         
         Args:
             cmd_template: Command template with {} placeholders
             args: Arguments provided by user
         
         Returns:
-            Tuple of (command_list, error_message)
+            Tuple of (command_string, error_message)
             Returns (None, error) if failed
         """
-        # Split template into parts
-        parts = shlex.split(cmd_template)
+        parts = cmd_template.split()
         result_parts = []
         arg_index = 0
         
@@ -56,36 +56,41 @@ class CommandExecutor:
         if arg_index < len(args):
             result_parts.extend(args[arg_index:])
         
-        return result_parts, ""
+        # Join with spaces to form a single command string
+        command_str = ' '.join(result_parts)
+        return command_str, ""
     
-    def execute(self, cmd_parts: List[str]) -> Tuple[bool, str, str]:
+    def execute(self, command_str: str) -> Tuple[bool, str, str]:
         """
         Execute a command and return the result.
+        Uses shell=True to support pipes, redirects, and operators like |, &&, ;.
         
         Args:
-            cmd_parts: List of command parts (e.g., ['ls', '-la'])
+            command_str: The command string to execute (e.g., 'ls -la | grep txt')
         
         Returns:
             Tuple of (success, stdout, stderr)
         """
         if self.dry_run:
-            print(f"[DRY RUN] Would execute: {' '.join(cmd_parts)}")
+            print(f"[DRY RUN] Would execute: {command_str}")
             return True, "", ""
         
         try:
             result = subprocess.run(
-                cmd_parts,
+                command_str,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=30,
+                shell=True,
+                executable='/bin/bash'
             )
             return result.returncode == 0, result.stdout, result.stderr
         except subprocess.TimeoutExpired:
             return False, "", "Command timed out after 30 seconds"
-        except FileNotFoundError:
-            return False, "", f"Command not found: {cmd_parts[0]}"
+        except FileNotFoundError as e:
+            return False, "", f"Command not found: {e}"
         except PermissionError:
-            return False, "", f"Permission denied: {cmd_parts[0]}"
+            return False, "", "Permission denied"
         except Exception as e:
             return False, "", str(e)
     
@@ -100,12 +105,12 @@ class CommandExecutor:
         Returns:
             Tuple of (success, output_message)
         """
-        cmd_parts, error = self.build_command(cmd_template, args)
+        command_str, error = self.build_command(cmd_template, args)
         
-        if cmd_parts is None:
+        if command_str is None:
             return False, error
         
-        success, stdout, stderr = self.execute(cmd_parts)
+        success, stdout, stderr = self.execute(command_str)
         
         output = ""
         if stdout:
@@ -115,12 +120,12 @@ class CommandExecutor:
         
         return success, output.strip()
     
-    def check_sudo_needed(self, cmd_parts: List[str]) -> bool:
+    def check_sudo_needed(self, command_str: str) -> bool:
         """
         Check if the command might need sudo privileges.
         
         Args:
-            cmd_parts: The command parts to check
+            command_str: The command string to check
         
         Returns:
             True if sudo might be needed, False otherwise
@@ -133,8 +138,9 @@ class CommandExecutor:
             'chown', 'chmod', 'useradd', 'userdel', 'passwd'
         ]
         
-        if cmd_parts and cmd_parts[0] in sudo_commands:
-            return True
+        for cmd in sudo_commands:
+            if command_str.startswith(cmd) or f' {cmd}' in command_str:
+                return True
         
         return False
 
@@ -158,12 +164,13 @@ def execute_command_safe(cmd_template: str, args: List[str], dry_run: bool = Fal
     
     return success
 
-def run_system_command(command: List[str], timeout: int = 30) -> Tuple[int, str, str]:
+def run_system_command(command: str, timeout: int = 30) -> Tuple[int, str, str]:
     """
     Run a system command and return the result.
+    Uses shell=True to support complex commands.
     
     Args:
-        command: List of command parts
+        command: Command string to execute
         timeout: Timeout in seconds
     
     Returns:
@@ -174,7 +181,9 @@ def run_system_command(command: List[str], timeout: int = 30) -> Tuple[int, str,
             command,
             capture_output=True,
             text=True,
-            timeout=timeout
+            timeout=timeout,
+            shell=True,
+            executable='/bin/bash'
         )
         return result.returncode, result.stdout, result.stderr
     except subprocess.TimeoutExpired:
