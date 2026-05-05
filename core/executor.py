@@ -8,12 +8,13 @@ Author: Abdelrahman Gaballah
 
 import subprocess
 import sys
-import shlex
 from typing import List, Tuple, Optional
+
 
 class CommandExecutor:
     """
     Execute system commands safely with argument substitution.
+    Supports pipes, redirects, and operators like |, &&, ; using shell=True.
     """
     
     def __init__(self, dry_run: bool = False):
@@ -130,7 +131,6 @@ class CommandExecutor:
         Returns:
             True if sudo might be needed, False otherwise
         """
-        # Commands that typically need sudo
         sudo_commands = [
             'apt', 'apt-get', 'dpkg', 'snap', 'systemctl',
             'service', 'modprobe', 'insmod', 'rmmod',
@@ -143,6 +143,7 @@ class CommandExecutor:
                 return True
         
         return False
+
 
 def execute_command_safe(cmd_template: str, args: List[str], dry_run: bool = False) -> bool:
     """
@@ -163,6 +164,7 @@ def execute_command_safe(cmd_template: str, args: List[str], dry_run: bool = Fal
         print(output)
     
     return success
+
 
 def run_system_command(command: str, timeout: int = 30) -> Tuple[int, str, str]:
     """
@@ -190,6 +192,7 @@ def run_system_command(command: str, timeout: int = 30) -> Tuple[int, str, str]:
         return -1, "", f"Command timed out after {timeout} seconds"
     except Exception as e:
         return -1, "", str(e)
+
 
 def format_output(stdout: str, stderr: str, max_lines: int = 50) -> str:
     """
