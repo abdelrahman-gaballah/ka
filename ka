@@ -1,187 +1,51 @@
 #!/usr/bin/env python3
-
-"""
-Ka - Easy Linux Commands
-Main executable file
-Author: Abdelrahman Gaballah
-"""
-
-import json
-import sys
 import subprocess
-import os
+import sys
+import json
 from pathlib import Path
 
-# Get the directory where this script is located
-SCRIPT_DIR = Path(__file__).parent.absolute()
-
-def load_config():
-    """Load configuration from config.json file"""
-    config_path = SCRIPT_DIR / "config.json"
-    try:
-        with open(config_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        print("Error: config.json not found")
-        sys.exit(1)
-    except json.JSONDecodeError:
-        print("Error: config.json is not valid JSON")
-        sys.exit(1)
-
-def load_language(lang_code):
-    """Load language file from langs/ directory"""
-    lang_path = SCRIPT_DIR / "langs" / f"{lang_code}.json"
-    try:
-        with open(lang_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        print(f"Error: Language '{lang_code}' not found in langs/ directory")
-        sys.exit(1)
-    except json.JSONDecodeError:
-        print(f"Error: {lang_code}.json is not valid JSON")
-        sys.exit(1)
-
-def load_user_commands():
-    """Load user custom commands from user/custom.json if exists"""
-    user_path = SCRIPT_DIR / "user" / "custom.json"
-    if user_path.exists():
-        try:
-            with open(user_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except json.JSONDecodeError:
-            print("Warning: user/custom.json is not valid JSON, skipping")
-    return {}
-
-def find_command(cmd_name, lang_data, user_commands):
-    """Search for command in language data and user custom commands"""
-    # Search in user custom commands first (higher priority)
-    for cat_name, cat_data in user_commands.get('categories', {}).items():
-        for cmd, cmd_info in cat_data.get('commands', {}).items():
-            if cmd == cmd_name:
-                return cmd_info, 'user'
-    
-    # Search in language commands
-    for cat_name, cat_data in lang_data.get('categories', {}).items():
-        for cmd, cmd_info in cat_data.get('commands', {}).items():
-            if cmd == cmd_name:
-                return cmd_info, 'lang'
-    
-    return None, None
-
-def execute_command(cmd_template, args):
-    """Execute the actual system command"""
-    # Build command with arguments
-    cmd_parts = cmd_template.split()
-    final_cmd = []
-    arg_index = 0
-    
-    for part in cmd_parts:
-        if part == '{}':
-            if arg_index < len(args):
-                final_cmd.append(args[arg_index])
-                arg_index += 1
-            else:
-                print(f"Error: Missing argument for command")
-                return False
-        else:
-            final_cmd.append(part)
-    
-    # Add any remaining arguments
-    final_cmd.extend(args[arg_index:])
-    
-    try:
-        result = subprocess.run(final_cmd, capture_output=True, text=True)
-        if result.stdout:
-            print(result.stdout, end='')
-        if result.stderr:
-            print(result.stderr, end='', file=sys.stderr)
-        return result.returncode == 0
-    except FileNotFoundError:
-        print(f"Error: Command not found - {final_cmd[0]}")
-        return False
-    except Exception as e:
-        print(f"Error: {e}")
-        return False
-
-def show_help(lang_data, user_commands):
-    """Display available commands"""
-    print("\n📦 Available Commands:\n")
-    
-    # Show user custom commands first
-    if user_commands.get('categories'):
-        print("🔹 Your Custom Commands:")
-        for cat_name, cat_data in user_commands.get('categories', {}).items():
-            for cmd, cmd_info in cat_data.get('commands', {}).items():
-                desc = cmd_info.get('description', 'No description')
-                print(f"   {cmd} - {desc}")
-        print()
-    
-    # Show language commands
-    print("🔹 Built-in Commands:")
-    for cat_name, cat_data in lang_data.get('categories', {}).items():
-        cat_display = cat_data.get('name', cat_name)
-        print(f"\n   📂 {cat_display}:")
-        for cmd, cmd_info in cat_data.get('commands', {}).items():
-            desc = cmd_info.get('description', 'No description')
-            print(f"      {cmd} - {desc}")
-
 def main():
-    """Main entry point"""
-    # Print logo
-    print("""
-░██                     
-░██                     
-░██    ░██    ░██████   
-░██   ░██          ░██  
-░███████      ░███████  
-░██   ░██    ░██   ░██  
-░██    ░██    ░█████░██ 
-    """)
-    print("☥ Ka - Easy Linux Commands\n")
-    
-    # Check if no arguments provided
     if len(sys.argv) < 2:
-        print("Usage: ka <command> [arguments]")
-        print("       ka help     - Show all commands")
-        print("       ka version  - Show version info")
-        sys.exit(0)
+        print("Usage: ka <command>")
+        sys.exit(1)
     
-    # Load configuration
-    config = load_config()
-    lang_code = config.get('language', 'en')
-    
-    # Load language and user commands
-    lang_data = load_language(lang_code)
-    user_commands = load_user_commands()
-    
-    # Handle special commands
-    user_cmd = sys.argv[1]
+    cmd = sys.argv[1]
     args = sys.argv[2:]
     
-    if user_cmd == 'help':
-        show_help(lang_data, user_commands)
-        sys.exit(0)
-    
-    if user_cmd == 'version':
-        print("Ka version 0.1.0")
-        print("Easy Linux Commands for beginners")
-        sys.exit(0)
-    
-    # Find and execute command
-    cmd_info, source = find_command(user_cmd, lang_data, user_commands)
-    
-    if cmd_info:
-        cmd_template = cmd_info.get('cmd')
-        if cmd_template:
-            success = execute_command(cmd_template, args)
-            sys.exit(0 if success else 1)
-        else:
-            print(f"Error: Command '{user_cmd}' has no executable template")
-            sys.exit(1)
+    config_path = Path.home() / ".config/ka/config.json"
+    if config_path.exists():
+        with open(config_path) as f:
+            config = json.load(f)
+            lang = config.get("language", "en")
     else:
-        print(f"Error: Command '{user_cmd}' not found")
-        print(f"Try 'ka help' to see available commands")
-        sys.exit(1)
+        lang = "en"
+    
+    lang_path = Path.home() / f".config/ka/langs/{lang}.json"
+    if not lang_path.exists():
+        lang_path = Path("/media/abdelrahman/LIN/My_Projects/ka/langs/en.json")
+    
+    with open(lang_path) as f:
+        data = json.load(f)
+    
+    command_info = None
+    for cat in data.get("categories", {}).values():
+        if cmd in cat.get("commands", {}):
+            command_info = cat["commands"][cmd]
+            break
+    
+    if command_info:
+        cmd_template = command_info["cmd"]
+        # Replace {} with args
+        for arg in args:
+            cmd_template = cmd_template.replace("{}", arg, 1)
+        
+        # Execute with shell=True
+        result = subprocess.run(cmd_template, shell=True, capture_output=True, text=True)
+        print(result.stdout, end="")
+        if result.stderr:
+            print(result.stderr, end="", file=sys.stderr)
+    else:
+        print(f"Command '{cmd}' not found")
 
 if __name__ == "__main__":
     main()
