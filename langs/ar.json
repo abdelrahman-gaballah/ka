@@ -11,7 +11,7 @@
         "space folder": { "cmd": "du -sh {}", "description": "حجم مجلد محدد", "args": 1 },
         "ram": { "cmd": "free -h", "description": "عرض استخدام الذاكرة العشوائية", "args": 0 },
         "ram detailed": { "cmd": "free -h -t", "description": "الذاكرة مع الإجمالي", "args": 0 },
-        "cmd": "sh -c \"top -bn1 | grep 'Cpu(s)'\"", "description": "نسبة استخدام المعالج", "args": 0 },
+        "cpu": { "cmd": "sh -c \"top -bn1 | grep 'Cpu(s)'\"", "description": "نسبة استخدام المعالج", "args": 0 },
         "cpu cores": { "cmd": "nproc", "description": "عدد أنوية المعالج", "args": 0 },
         "cpu info": { "cmd": "lscpu | grep 'Model name'", "description": "طراز المعالج", "args": 0 },
         "battery": { "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to empty'", "description": "نسبة البطارية والوقت المتبقي", "args": 0 },
