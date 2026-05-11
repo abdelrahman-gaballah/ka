@@ -9,6 +9,9 @@
 ░██   ░██    ░██   ░██  
 ░██    ░██    ░█████░██ 
 ```
+[![GitHub stars](https://img.shields.io/github/stars/abdelrahman-gaballah/ka)](https://github.com/abdelrahman-gaballah/ka/stargazers)
+[![GitHub license](https://img.shields.io/github/license/abdelrahman-gaballah/ka)](https://github.com/abdelrahman-gaballah/ka/blob/main/LICENSE)
+[![Python Version](https://img.shields.io/badge/python-3.6%2B-blue)](https://www.python.org/downloads/)
 
 **Ka** is a command-line tool that translates simple natural language commands into actual Linux commands. Type `ka space` instead of `df -h`, or `ka ram` instead of `free -h`.
 
@@ -26,10 +29,8 @@
 8. [Project Structure](#project-structure)
 9. [Development](#development)
 10. [Troubleshooting](#troubleshooting)
-11. [FAQ](#faq)
-12. [Contributing](#contributing)
-13. [License](#license)
-14. [Author](#author)
+11. [License](#license)
+12. [Author](#author)
 
 ---
 
@@ -643,119 +644,12 @@ python -m json.tool ~/.config/ka/user/custom.json
 
 ---
 
-## FAQ
-
-### Q: Is Ka free?
-
-**A:** Yes, Ka is open-source under the MIT License. Free for personal and commercial use.
-
-### Q: Does Ka require internet?
-
-**A:** No. After installation, Ka works completely offline except for commands like `weather` or `translate` which need internet.
-
-### Q: Can I use Ka with sudo?
-
-**A:** Yes: `sudo ka update` or any command that needs root privileges.
-
-### Q: Does Ka work on macOS or Windows?
-
-**A:** Currently Linux only. macOS support planned. Windows via WSL.
-
-### Q: How is Ka different from alias?
-
-**A:** Aliases require manual configuration for each command. Ka has 150+ built-in commands, supports arguments, multi-language, and detects installed programs automatically.
-
-### Q: How is Ka different from `thefuck`?
-
-**A:** `thefuck` corrects typos in commands you already know. Ka lets you use completely different, simpler words instead of remembering complex commands.
-
-### Q: Can I contribute?
-
-**A:** Absolutely! Fork the repo, make changes, and submit a pull request.
-
----
-
-## Roadmap
-
-- [ ] v0.2.0 - More commands (150+ total)
-- [ ] v0.3.0 - Auto-completion for bash/zsh
-- [ ] v0.4.0 - Plugin system
-- [ ] v0.5.0 - AI-powered command suggestions
-- [ ] v1.0.0 - Stable release
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing`)
-3. Make your changes
-4. Run tests (`python -m pytest`)
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to branch (`git push origin feature/amazing`)
-7. Open a Pull Request
-
-### Contribution Guidelines
-
-- Write clear commit messages
-- Add tests for new features
-- Update documentation
-- Follow existing code style
-- Keep it simple
-
----
-
 ## License
 
-MIT License
-
-Copyright (c) 2026 Abdelrahman Gaballah
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+MIT License — Copyright (c) 2026 Abdelrahman Gaballah
 
 ---
 
 ## Author
 
-**Abdelrahman Gaballah**
-
-- Age: 15
-- Country: Egypt
-- Role: Software Engineer & AI Researcher
-- Education: Level 3 DECI Scholar (AI & Data Science track)
-- Achievements: NASA Space Apps Challenge participant, McKinsey Forward alum, DECI Excellence Award
-
-**Connect:**
-
-- GitHub: [abdelrahman-gaballah](https://github.com/abdelrahman-gaballah)
-- LinkedIn: [abdelrahman-gaballah](https://www.linkedin.com/in/abdelrahman-gaballah)
-- Portfolio: [abdelrahman-gaballah.netlify.app](https://abdelrahman-gaballah.netlify.app)
-- Email: abdelrahman.gaballah.official@gmail.com
-
----
-
-## Star History
-
-If you find Ka useful, please star the repository on GitHub!
-
-[![Star History Chart](https://api.star-history.com/svg?repos=abdelrahman-gaballah/ka&type=Date)](https://star-history.com/#abdelrahman-gaballah/ka)
-
----
-
-**Made with ☥ by Abdelrahman Gaballah**
+**Abdelrahman Gaballah** — [GitHub](https://github.com/abdelrahman-gaballah)

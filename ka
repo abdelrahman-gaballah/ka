@@ -1,51 +1,9 @@
 #!/usr/bin/env python3
-import subprocess
 import sys
-import json
 from pathlib import Path
 
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: ka <command>")
-        sys.exit(1)
-    
-    cmd = sys.argv[1]
-    args = sys.argv[2:]
-    
-    config_path = Path.home() / ".config/ka/config.json"
-    if config_path.exists():
-        with open(config_path) as f:
-            config = json.load(f)
-            lang = config.get("language", "en")
-    else:
-        lang = "en"
-    
-    lang_path = Path.home() / f".config/ka/langs/{lang}.json"
-    if not lang_path.exists():
-        lang_path = Path("/media/abdelrahman/LIN/My_Projects/ka/langs/en.json")
-    
-    with open(lang_path) as f:
-        data = json.load(f)
-    
-    command_info = None
-    for cat in data.get("categories", {}).values():
-        if cmd in cat.get("commands", {}):
-            command_info = cat["commands"][cmd]
-            break
-    
-    if command_info:
-        cmd_template = command_info["cmd"]
-        # Replace {} with args
-        for arg in args:
-            cmd_template = cmd_template.replace("{}", arg, 1)
-        
-        # Execute with shell=True
-        result = subprocess.run(cmd_template, shell=True, capture_output=True, text=True)
-        print(result.stdout, end="")
-        if result.stderr:
-            print(result.stderr, end="", file=sys.stderr)
-    else:
-        print(f"Command '{cmd}' not found")
+sys.path.insert(0, str(Path(__file__).parent.absolute()))
+from core.cli import main
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -108,4 +108,4 @@ echo ""
 echo -e "To use this language, edit config.json:"
 echo -e "  ${YELLOW}\"language\": \"$LANG_CODE\"${NC}"
 echo ""
-echo -e "Or run: ${YELLOW}ka config set language $LANG_CODE${NC}"س
+echo -e "Or run: ${YELLOW}ka config set language $LANG_CODE${NC}"

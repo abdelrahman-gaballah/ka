@@ -5,181 +5,766 @@
     "system_info": {
       "name": "System Information",
       "commands": {
-        "space": { "cmd": "df -h", "description": "Description here", "args": 0 },
-        "space inode": { "cmd": "df -i", "description": "Description here", "args": 0 },
-        "space here": { "cmd": "du -sh .", "description": "Description here", "args": 0 },
-        "space folder": { "cmd": "du -sh {}", "description": "Description here", "args": 1 },
-        "ram": { "cmd": "free -h", "description": "Description here", "args": 0 },
-        "ram detailed": { "cmd": "free -h -t", "description": "Description here", "args": 0 },
-        "cpu": { "cmd": "top -bn2 | grep 'Cpu(s)' | tail -1 | awk '{print $2 + $4}'", "description": "Description here", "args": 0 },
-        "cpu cores": { "cmd": "nproc", "description": "Description here", "args": 0 },
-        "cpu info": { "cmd": "lscpu | grep 'Model name'", "description": "Description here", "args": 0 },
-        "battery": { "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to empty'", "description": "Description here", "args": 0 },
-        "battery full": { "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to full'", "description": "Description here", "args": 0 },
-        "uptime": { "cmd": "uptime -p", "description": "Description here", "args": 0 },
-        "uptime raw": { "cmd": "uptime", "description": "Description here", "args": 0 },
-        "os": { "cmd": "cat /etc/os-release | grep PRETTY_NAME | cut -d= -f2", "description": "Description here", "args": 0 },
-        "kernel": { "cmd": "uname -r", "description": "Description here", "args": 0 },
-        "users": { "cmd": "who", "description": "Description here", "args": 0 },
-        "date": { "cmd": "date", "description": "Description here", "args": 0 },
-        "calendar": { "cmd": "cal", "description": "Description here", "args": 0 },
-        "calendar year": { "cmd": "cal {}", "description": "Description here", "args": 1 },
-        "temperature": { "cmd": "sensors | grep 'Core 0'", "description": "Description here", "args": 0 },
-        "disk health": { "cmd": "sudo smartctl -H /dev/sda", "description": "Description here", "args": 0 }
+        "space": {
+          "cmd": "df -h",
+          "description": "Description here",
+          "args": 0
+        },
+        "space inode": {
+          "cmd": "df -i",
+          "description": "Description here",
+          "args": 0
+        },
+        "space here": {
+          "cmd": "du -sh .",
+          "description": "Description here",
+          "args": 0
+        },
+        "space folder": {
+          "cmd": "du -sh {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "ram": {
+          "cmd": "free -h",
+          "description": "Description here",
+          "args": 0
+        },
+        "ram detailed": {
+          "cmd": "free -h -t",
+          "description": "Description here",
+          "args": 0
+        },
+        "cpu": {
+          "cmd": "top -bn2 | grep 'Cpu(s)' | tail -1 | awk '{print $2 + $4}'",
+          "description": "Description here",
+          "args": 0
+        },
+        "cpu cores": {
+          "cmd": "nproc",
+          "description": "Description here",
+          "args": 0
+        },
+        "cpu info": {
+          "cmd": "lscpu | grep 'Model name'",
+          "description": "Description here",
+          "args": 0
+        },
+        "battery": {
+          "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to empty'",
+          "description": "Description here",
+          "args": 0
+        },
+        "battery full": {
+          "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to full'",
+          "description": "Description here",
+          "args": 0
+        },
+        "uptime": {
+          "cmd": "uptime -p",
+          "description": "Description here",
+          "args": 0
+        },
+        "uptime raw": {
+          "cmd": "uptime",
+          "description": "Description here",
+          "args": 0
+        },
+        "os": {
+          "cmd": "cat /etc/os-release | grep PRETTY_NAME | cut -d= -f2",
+          "description": "Description here",
+          "args": 0
+        },
+        "kernel": {
+          "cmd": "uname -r",
+          "description": "Description here",
+          "args": 0
+        },
+        "users": {
+          "cmd": "who",
+          "description": "Description here",
+          "args": 0
+        },
+        "date": {
+          "cmd": "date",
+          "description": "Description here",
+          "args": 0
+        },
+        "calendar": {
+          "cmd": "cal",
+          "description": "Description here",
+          "args": 0
+        },
+        "calendar year": {
+          "cmd": "cal {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "temperature": {
+          "cmd": "sensors | grep -E 'Core 0|Tctl|CPUTIN|Package id'",
+          "description": "Description here",
+          "args": 0
+        },
+        "disk health": {
+          "cmd": "smartctl -H /dev/sda",
+          "description": "Description here",
+          "args": 0
+        }
       }
     },
     "file_operations": {
       "name": "File Operations",
       "commands": {
-        "list": { "cmd": "ls -la", "description": "Description here", "args": 0 },
-        "list long": { "cmd": "ls -l", "description": "Description here", "args": 0 },
-        "list all": { "cmd": "ls -a", "description": "Description here", "args": 0 },
-        "list large": { "cmd": "ls -laS", "description": "Description here", "args": 0 },
-        "list recent": { "cmd": "ls -lat", "description": "Description here", "args": 0 },
-        "tree": { "cmd": "tree", "description": "Description here", "args": 0 },
-        "tree depth": { "cmd": "tree -L {}", "description": "Description here", "args": 1 },
-        "copy": { "cmd": "cp -r {} {}", "description": "Description here", "args": 2 },
-        "copy preserve": { "cmd": "cp -rp {} {}", "description": "Description here", "args": 2 },
-        "move": { "cmd": "mv {} {}", "description": "Description here", "args": 2 },
-        "delete": { "cmd": "rm -i {}", "description": "Description here", "args": 1 },
-        "delete force": { "cmd": "rm -f {}", "description": "Description here", "args": 1 },
-        "delete folder": { "cmd": "rm -rf {}", "description": "Description here", "args": 1 },
-        "create folder": { "cmd": "mkdir -p {}", "description": "Description here", "args": 1 },
-        "create file": { "cmd": "touch {}", "description": "Description here", "args": 1 },
-        "rename": { "cmd": "mv {} {}", "description": "Description here", "args": 2 },
-        "open folder": { "cmd": "xdg-open {}", "description": "Description here", "args": 1 },
-        "open file": { "cmd": "xdg-open {}", "description": "Description here", "args": 1 },
-        "zip": { "cmd": "zip -r {}.zip {}", "description": "Description here", "args": 2 },
-        "unzip": { "cmd": "unzip {}", "description": "Description here", "args": 1 },
-        "tar compress": { "cmd": "tar -czvf {}.tar.gz {}", "description": "Description here", "args": 2 },
-        "tar extract": { "cmd": "tar -xzvf {}", "description": "Description here", "args": 1 },
-        "find name": { "cmd": "find . -name {}", "description": "Description here", "args": 1 },
-        "find text": { "cmd": "grep -r {} .", "description": "Description here", "args": 1 },
-        "find large": { "cmd": "find . -type f -size +{}M", "description": "Description here", "args": 1 },
-        "find empty": { "cmd": "find . -empty", "description": "Description here", "args": 0 },
-        "permissions": { "cmd": "stat -c '%a %n' {}", "description": "Description here", "args": 1 },
-        "chmod": { "cmd": "chmod {} {}", "description": "Description here", "args": 2 }
+        "list": {
+          "cmd": "ls -la",
+          "description": "Description here",
+          "args": 0
+        },
+        "list long": {
+          "cmd": "ls -l",
+          "description": "Description here",
+          "args": 0
+        },
+        "list all": {
+          "cmd": "ls -a",
+          "description": "Description here",
+          "args": 0
+        },
+        "list large": {
+          "cmd": "ls -laS",
+          "description": "Description here",
+          "args": 0
+        },
+        "list recent": {
+          "cmd": "ls -lat",
+          "description": "Description here",
+          "args": 0
+        },
+        "tree": {
+          "cmd": "tree",
+          "description": "Description here",
+          "args": 0
+        },
+        "tree depth": {
+          "cmd": "tree -L {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "copy": {
+          "cmd": "cp -r {} {}",
+          "description": "Description here",
+          "args": 2
+        },
+        "copy preserve": {
+          "cmd": "cp -rp {} {}",
+          "description": "Description here",
+          "args": 2
+        },
+        "move": {
+          "cmd": "mv {} {}",
+          "description": "Description here",
+          "args": 2
+        },
+        "delete": {
+          "cmd": "rm {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "delete force": {
+          "cmd": "rm -f {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "delete folder": {
+          "cmd": "rm -r {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "create folder": {
+          "cmd": "mkdir -p {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "create file": {
+          "cmd": "touch {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "rename": {
+          "cmd": "mv {} {}",
+          "description": "Description here",
+          "args": 2
+        },
+        "open folder": {
+          "cmd": "xdg-open {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "open file": {
+          "cmd": "xdg-open {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "zip": {
+          "cmd": "zip -r {}.zip {}",
+          "description": "Description here",
+          "args": 2
+        },
+        "unzip": {
+          "cmd": "unzip {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "tar compress": {
+          "cmd": "tar -czvf {}.tar.gz {}",
+          "description": "Description here",
+          "args": 2
+        },
+        "tar extract": {
+          "cmd": "tar -xzvf {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "find name": {
+          "cmd": "find . -name {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "find text": {
+          "cmd": "grep -r {} .",
+          "description": "Description here",
+          "args": 1
+        },
+        "find large": {
+          "cmd": "find . -type f -size +{}M",
+          "description": "Description here",
+          "args": 1
+        },
+        "find empty": {
+          "cmd": "find . -empty",
+          "description": "Description here",
+          "args": 0
+        },
+        "permissions": {
+          "cmd": "stat -c '%a %n' {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "chmod": {
+          "cmd": "chmod -v {} {}",
+          "description": "Description here",
+          "args": 2
+        }
       }
     },
     "network": {
       "name": "Network",
       "commands": {
-        "ip": { "cmd": "ip -br a", "description": "Description here", "args": 0 },
-        "ip public": { "cmd": "curl -s ifconfig.me", "description": "Description here", "args": 0 },
-        "ip location": { "cmd": "curl -s ipinfo.io/{}", "description": "Description here", "args": 1 },
-        "wifi": { "cmd": "nmcli device wifi list", "description": "Description here", "args": 0 },
-        "wifi connect": { "cmd": "nmcli device wifi connect {} password {}", "description": "Description here", "args": 2 },
-        "wifi disconnect": { "cmd": "nmcli device disconnect wlan0", "description": "Description here", "args": 0 },
-        "wifi off": { "cmd": "nmcli radio wifi off", "description": "Description here", "args": 0 },
-        "wifi on": { "cmd": "nmcli radio wifi on", "description": "Description here", "args": 0 },
-        "ping": { "cmd": "ping -c 4 {}", "description": "Description here", "args": 1 },
-        "ping continuous": { "cmd": "ping {}", "description": "Description here", "args": 1 },
-        "ports": { "cmd": "ss -tuln", "description": "Description here", "args": 0 },
-        "ports listening": { "cmd": "ss -tln", "description": "Description here", "args": 0 },
-        "firewall status": { "cmd": "sudo ufw status", "description": "Description here", "args": 0 },
-        "firewall enable": { "cmd": "sudo ufw enable", "description": "Description here", "args": 0 },
-        "firewall disable": { "cmd": "sudo ufw disable", "description": "Description here", "args": 0 },
-        "download": { "cmd": "wget {}", "description": "Description here", "args": 1 },
-        "download resume": { "cmd": "wget -c {}", "description": "Description here", "args": 1 },
-        "speedtest": { "cmd": "speedtest-cli", "description": "Description here", "args": 0 },
-        "dns": { "cmd": "cat /etc/resolv.conf", "description": "Description here", "args": 0 },
-        "hostname": { "cmd": "hostname", "description": "Description here", "args": 0 }
+        "ip": {
+          "cmd": "ip -br a",
+          "description": "Description here",
+          "args": 0
+        },
+        "ip public": {
+          "cmd": "curl -s ifconfig.me",
+          "description": "Description here",
+          "args": 0
+        },
+        "ip location": {
+          "cmd": "curl -s ipinfo.io/{}",
+          "description": "Description here",
+          "args": 1
+        },
+        "wifi": {
+          "cmd": "nmcli device wifi list",
+          "description": "Description here",
+          "args": 0
+        },
+        "wifi connect": {
+          "cmd": "nmcli device wifi connect {} password {}",
+          "description": "Description here",
+          "args": 2
+        },
+        "wifi disconnect": {
+          "cmd": "nmcli device disconnect wlan0",
+          "description": "Description here",
+          "args": 0
+        },
+        "wifi off": {
+          "cmd": "nmcli radio wifi off",
+          "description": "Description here",
+          "args": 0
+        },
+        "wifi on": {
+          "cmd": "nmcli radio wifi on",
+          "description": "Description here",
+          "args": 0
+        },
+        "ping": {
+          "cmd": "ping -c 4 {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "ping continuous": {
+          "cmd": "ping {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "ports": {
+          "cmd": "ss -tuln",
+          "description": "Description here",
+          "args": 0
+        },
+        "ports listening": {
+          "cmd": "ss -tln",
+          "description": "Description here",
+          "args": 0
+        },
+        "firewall status": {
+          "cmd": "ufw status",
+          "description": "Description here",
+          "args": 0
+        },
+        "firewall enable": {
+          "cmd": "ufw enable",
+          "description": "Description here",
+          "args": 0
+        },
+        "firewall disable": {
+          "cmd": "ufw disable",
+          "description": "Description here",
+          "args": 0
+        },
+        "download": {
+          "cmd": "wget {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "download resume": {
+          "cmd": "wget -c {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "speedtest": {
+          "cmd": "speedtest-cli",
+          "description": "Description here",
+          "args": 0
+        },
+        "dns": {
+          "cmd": "cat /etc/resolv.conf",
+          "description": "Description here",
+          "args": 0
+        },
+        "hostname": {
+          "cmd": "hostname",
+          "description": "Description here",
+          "args": 0
+        }
       }
     },
     "system_control": {
       "name": "System Control",
       "commands": {
-        "shutdown": { "cmd": "shutdown now", "description": "Description here", "args": 0 },
-        "shutdown time": { "cmd": "shutdown +{}", "description": "Description here", "args": 1 },
-        "cancel shutdown": { "cmd": "shutdown -c", "description": "Description here", "args": 0 },
-        "restart": { "cmd": "reboot", "description": "Description here", "args": 0 },
-        "suspend": { "cmd": "systemctl suspend", "description": "Description here", "args": 0 },
-        "hibernate": { "cmd": "systemctl hibernate", "description": "Description here", "args": 0 },
-        "lock": { "cmd": "loginctl lock-session", "description": "Description here", "args": 0 },
-        "logout": { "cmd": "gnome-session-quit --no-prompt", "description": "Description here", "args": 0 },
-        "update": { "cmd": "sudo apt update && sudo apt upgrade -y", "description": "Description here", "args": 0 },
-        "update check": { "cmd": "sudo apt update", "description": "Description here", "args": 0 },
-        "upgrade": { "cmd": "sudo apt upgrade -y", "description": "Description here", "args": 0 },
-        "clean": { "cmd": "sudo apt autoremove -y && sudo apt autoclean", "description": "Description here", "args": 0 },
-        "brightness up": { "cmd": "brightnessctl set +10%", "description": "Description here", "args": 0 },
-        "brightness down": { "cmd": "brightnessctl set 10%-", "description": "Description here", "args": 0 },
-        "brightness set": { "cmd": "brightnessctl set {}%", "description": "Description here", "args": 1 },
-        "volume up": { "cmd": "pactl set-sink-volume @DEFAULT_SINK@ +5%", "description": "Description here", "args": 0 },
-        "volume down": { "cmd": "pactl set-sink-volume @DEFAULT_SINK@ -5%", "description": "Description here", "args": 0 },
-        "volume set": { "cmd": "pactl set-sink-volume @DEFAULT_SINK@ {}%", "description": "Description here", "args": 1 },
-        "mute": { "cmd": "pactl set-sink-mute @DEFAULT_SINK@ toggle", "description": "Description here", "args": 0 }
+        "shutdown": {
+          "cmd": "shutdown +1",
+          "description": "Description here",
+          "args": 0
+        },
+        "shutdown time": {
+          "cmd": "shutdown +{}",
+          "description": "Description here",
+          "args": 1
+        },
+        "cancel shutdown": {
+          "cmd": "shutdown -c",
+          "description": "Description here",
+          "args": 0
+        },
+        "restart": {
+          "cmd": "shutdown -r +1",
+          "description": "Description here",
+          "args": 0
+        },
+        "suspend": {
+          "cmd": "systemctl suspend",
+          "description": "Description here",
+          "args": 0
+        },
+        "hibernate": {
+          "cmd": "systemctl hibernate",
+          "description": "Description here",
+          "args": 0
+        },
+        "lock": {
+          "cmd": "loginctl lock-session",
+          "description": "Description here",
+          "args": 0
+        },
+        "logout": {
+          "cmd": "gnome-session-quit",
+          "description": "Description here",
+          "args": 0
+        },
+        "update": {
+          "cmd": "apt update && sudo apt upgrade",
+          "description": "Description here",
+          "args": 0
+        },
+        "update check": {
+          "cmd": "apt update",
+          "description": "Description here",
+          "args": 0
+        },
+        "upgrade": {
+          "cmd": "apt upgrade",
+          "description": "Description here",
+          "args": 0
+        },
+        "clean": {
+          "cmd": "apt autoremove && sudo apt autoclean",
+          "description": "Description here",
+          "args": 0
+        },
+        "brightness up": {
+          "cmd": "brightnessctl set +10%",
+          "description": "Description here",
+          "args": 0
+        },
+        "brightness down": {
+          "cmd": "brightnessctl set 10%-",
+          "description": "Description here",
+          "args": 0
+        },
+        "brightness set": {
+          "cmd": "brightnessctl set {}%",
+          "description": "Description here",
+          "args": 1
+        },
+        "volume up": {
+          "cmd": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+          "description": "Description here",
+          "args": 0
+        },
+        "volume down": {
+          "cmd": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+          "description": "Description here",
+          "args": 0
+        },
+        "volume set": {
+          "cmd": "pactl set-sink-volume @DEFAULT_SINK@ {}%",
+          "description": "Description here",
+          "args": 1
+        },
+        "mute": {
+          "cmd": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+          "description": "Description here",
+          "args": 0
+        }
       }
     },
     "processes": {
       "name": "Process Management",
       "commands": {
-        "processes": { "cmd": "ps aux", "description": "Description here", "args": 0 },
-        "processes user": { "cmd": "ps aux | grep {}", "description": "Description here", "args": 1 },
-        "top": { "cmd": "top", "description": "Description here", "args": 0 },
-        "htop": { "cmd": "htop", "description": "Description here", "args": 0 },
-        "kill": { "cmd": "kill {}", "description": "Description here", "args": 1 },
-        "kill name": { "cmd": "pkill {}", "description": "Description here", "args": 1 },
-        "force kill": { "cmd": "kill -9 {}", "description": "Description here", "args": 1 },
-        "memory hog": { "cmd": "ps aux --sort=-%mem | head -10", "description": "Description here", "args": 0 },
-        "cpu hog": { "cmd": "ps aux --sort=-%cpu | head -10", "description": "Description here", "args": 0 },
-        "service status": { "cmd": "systemctl status {}", "description": "Description here", "args": 1 },
-        "service start": { "cmd": "sudo systemctl start {}", "description": "Description here", "args": 1 },
-        "service stop": { "cmd": "sudo systemctl stop {}", "description": "Description here", "args": 1 },
-        "service restart": { "cmd": "sudo systemctl restart {}", "description": "Description here", "args": 1 },
-        "service enable": { "cmd": "sudo systemctl enable {}", "description": "Description here", "args": 1 },
-        "service disable": { "cmd": "sudo systemctl disable {}", "description": "Description here", "args": 1 }
+        "processes": {
+          "cmd": "ps aux",
+          "description": "Description here",
+          "args": 0
+        },
+        "processes user": {
+          "cmd": "ps aux | grep {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "top": {
+          "cmd": "top",
+          "description": "Description here",
+          "args": 0
+        },
+        "htop": {
+          "cmd": "htop",
+          "description": "Description here",
+          "args": 0
+        },
+        "kill": {
+          "cmd": "kill {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "kill name": {
+          "cmd": "pkill {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "force kill": {
+          "cmd": "kill -15 {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "memory hog": {
+          "cmd": "ps aux --sort=-%mem | head -10",
+          "description": "Description here",
+          "args": 0
+        },
+        "cpu hog": {
+          "cmd": "ps aux --sort=-%cpu | head -10",
+          "description": "Description here",
+          "args": 0
+        },
+        "service status": {
+          "cmd": "systemctl status {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "service start": {
+          "cmd": "systemctl start {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "service stop": {
+          "cmd": "systemctl stop {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "service restart": {
+          "cmd": "systemctl restart {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "service enable": {
+          "cmd": "systemctl enable {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "service disable": {
+          "cmd": "systemctl disable {}",
+          "description": "Description here",
+          "args": 1
+        }
       }
     },
     "development": {
       "name": "Development",
       "commands": {
-        "git status": { "cmd": "git status", "description": "Description here", "args": 0 },
-        "git pull": { "cmd": "git pull", "description": "Description here", "args": 0 },
-        "git push": { "cmd": "git push", "description": "Description here", "args": 0 },
-        "git commit": { "cmd": "git commit -m {}", "description": "Description here", "args": 1 },
-        "git add": { "cmd": "git add {}", "description": "Description here", "args": 1 },
-        "git add all": { "cmd": "git add .", "description": "Description here", "args": 0 },
-        "git log": { "cmd": "git log --oneline -10", "description": "Description here", "args": 0 },
-        "git branch": { "cmd": "git branch", "description": "Description here", "args": 0 },
-        "git checkout": { "cmd": "git checkout {}", "description": "Description here", "args": 1 },
-        "python run": { "cmd": "python3 {}", "description": "Description here", "args": 1 },
-        "python repl": { "cmd": "python3", "description": "Description here", "args": 0 },
-        "python install": { "cmd": "pip3 install {}", "description": "Description here", "args": 1 },
-        "node run": { "cmd": "node {}", "description": "Description here", "args": 1 },
-        "node repl": { "cmd": "node", "description": "Description here", "args": 0 },
-        "npm install": { "cmd": "npm install {}", "description": "Description here", "args": 1 },
-        "npm init": { "cmd": "npm init -y", "description": "Description here", "args": 0 },
-        "make": { "cmd": "make", "description": "Description here", "args": 0 },
-        "make clean": { "cmd": "make clean", "description": "Description here", "args": 0 },
-        "docker ps": { "cmd": "docker ps", "description": "Description here", "args": 0 },
-        "docker ps all": { "cmd": "docker ps -a", "description": "Description here", "args": 0 },
-        "docker stop": { "cmd": "docker stop {}", "description": "Description here", "args": 1 },
-        "docker rm": { "cmd": "docker rm {}", "description": "Description here", "args": 1 },
-        "docker images": { "cmd": "docker images", "description": "Description here", "args": 0 },
-        "docker rmi": { "cmd": "docker rmi {}", "description": "Description here", "args": 1 }
+        "git status": {
+          "cmd": "git status",
+          "description": "Description here",
+          "args": 0
+        },
+        "git pull": {
+          "cmd": "git pull",
+          "description": "Description here",
+          "args": 0
+        },
+        "git push": {
+          "cmd": "git push",
+          "description": "Description here",
+          "args": 0
+        },
+        "git commit": {
+          "cmd": "git commit -m {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "git add": {
+          "cmd": "git add {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "git add all": {
+          "cmd": "git add .",
+          "description": "Description here",
+          "args": 0
+        },
+        "git log": {
+          "cmd": "git log --oneline -10",
+          "description": "Description here",
+          "args": 0
+        },
+        "git branch": {
+          "cmd": "git branch",
+          "description": "Description here",
+          "args": 0
+        },
+        "git checkout": {
+          "cmd": "git checkout {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "python run": {
+          "cmd": "python3 {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "python repl": {
+          "cmd": "python3",
+          "description": "Description here",
+          "args": 0
+        },
+        "python install": {
+          "cmd": "pip3 install {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "node run": {
+          "cmd": "node {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "node repl": {
+          "cmd": "node",
+          "description": "Description here",
+          "args": 0
+        },
+        "npm install": {
+          "cmd": "npm install {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "npm init": {
+          "cmd": "npm init -y",
+          "description": "Description here",
+          "args": 0
+        },
+        "make": {
+          "cmd": "make",
+          "description": "Description here",
+          "args": 0
+        },
+        "make clean": {
+          "cmd": "make clean",
+          "description": "Description here",
+          "args": 0
+        },
+        "docker ps": {
+          "cmd": "docker ps",
+          "description": "Description here",
+          "args": 0
+        },
+        "docker ps all": {
+          "cmd": "docker ps -a",
+          "description": "Description here",
+          "args": 0
+        },
+        "docker stop": {
+          "cmd": "docker stop {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "docker rm": {
+          "cmd": "docker rm {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "docker images": {
+          "cmd": "docker images",
+          "description": "Description here",
+          "args": 0
+        },
+        "docker rmi": {
+          "cmd": "docker rmi {}",
+          "description": "Description here",
+          "args": 1
+        }
       }
     },
     "utilities": {
       "name": "Utilities",
       "commands": {
-        "weather": { "cmd": "curl -s wttr.in/{}", "description": "Description here", "args": 1 },
-        "weather today": { "cmd": "curl -s wttr.in/{}?format=3", "description": "Description here", "args": 1 },
-        "translate": { "cmd": "trans '{}'", "description": "Description here", "args": 1 },
-        "timer": { "cmd": "sleep {} && paplay /usr/share/sounds/freedesktop/complete.oga", "description": "Description here", "args": 1 },
-        "timer minutes": { "cmd": "sleep {}m && paplay /usr/share/sounds/freedesktop/complete.oga", "description": "Description here", "args": 1 },
-        "notes": { "cmd": "$EDITOR ~/ka_notes.txt", "description": "Description here", "args": 0 },
-        "todo": { "cmd": "cat ~/ka_todo.txt", "description": "Description here", "args": 0 },
-        "todo add": { "cmd": "echo {} >> ~/ka_todo.txt", "description": "Description here", "args": 1 },
-        "todo remove": { "cmd": "sed -i '/{}/d' ~/ka_todo.txt", "description": "Description here", "args": 1 },
-        "screenshot": { "cmd": "gnome-screenshot -i", "description": "Description here", "args": 0 },
-        "screenshot full": { "cmd": "gnome-screenshot", "description": "Description here", "args": 0 },
-        "screenshot window": { "cmd": "gnome-screenshot -w", "description": "Description here", "args": 0 },
-        "clipboard copy": { "cmd": "echo {} | xclip -selection clipboard", "description": "Description here", "args": 1 },
-        "clipboard paste": { "cmd": "xclip -selection clipboard -o", "description": "Description here", "args": 0 },
-        "history": { "cmd": "history | tail -20", "description": "Description here", "args": 0 },
-        "clear": { "cmd": "clear", "description": "Description here", "args": 0 },
-        "echo": { "cmd": "echo {}", "description": "Description here", "args": 1 },
-        "man": { "cmd": "man {}", "description": "Description here", "args": 1 }
+        "weather": {
+          "cmd": "curl -s wttr.in/{}",
+          "description": "Description here",
+          "args": 1
+        },
+        "weather today": {
+          "cmd": "curl -s wttr.in/{}?format=3",
+          "description": "Description here",
+          "args": 1
+        },
+        "translate": {
+          "cmd": "trans '{}'",
+          "description": "Description here",
+          "args": 1
+        },
+        "timer": {
+          "cmd": "sleep {} && paplay /usr/share/sounds/freedesktop/complete.oga",
+          "description": "Description here",
+          "args": 1
+        },
+        "timer minutes": {
+          "cmd": "sleep {}m && paplay /usr/share/sounds/freedesktop/complete.oga",
+          "description": "Description here",
+          "args": 1
+        },
+        "notes": {
+          "cmd": "$EDITOR $HOME/ka_notes.txt",
+          "description": "Description here",
+          "args": 0
+        },
+        "todo": {
+          "cmd": "test -f $HOME/ka_todo.txt && cat $HOME/ka_todo.txt || echo '(empty)'",
+          "description": "Description here",
+          "args": 0
+        },
+        "todo add": {
+          "cmd": "echo {} >> $HOME/ka_todo.txt",
+          "description": "Description here",
+          "args": 1
+        },
+        "todo remove": {
+          "cmd": "test -f $HOME/ka_todo.txt && sed -i '/{}/d' $HOME/ka_todo.txt || echo 'empty'",
+          "description": "Description here",
+          "args": 1
+        },
+        "screenshot": {
+          "cmd": "gnome-screenshot -i",
+          "description": "Description here",
+          "args": 0
+        },
+        "screenshot full": {
+          "cmd": "gnome-screenshot",
+          "description": "Description here",
+          "args": 0
+        },
+        "screenshot window": {
+          "cmd": "gnome-screenshot -w",
+          "description": "Description here",
+          "args": 0
+        },
+        "clipboard copy": {
+          "cmd": "echo {} | xclip -selection clipboard",
+          "description": "Description here",
+          "args": 1
+        },
+        "clipboard paste": {
+          "cmd": "xclip -selection clipboard -o",
+          "description": "Description here",
+          "args": 0
+        },
+        "history": {
+          "cmd": "history | tail -20",
+          "description": "Description here",
+          "args": 0
+        },
+        "clear": {
+          "cmd": "clear",
+          "description": "Description here",
+          "args": 0
+        },
+        "echo": {
+          "cmd": "echo {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "man": {
+          "cmd": "man {}",
+          "description": "Description here",
+          "args": 1
+        },
+        "weather local": {
+          "cmd": "curl -s wttr.in?format=4",
+          "description": "Description here",
+          "args": 0
+        }
       }
     }
   }

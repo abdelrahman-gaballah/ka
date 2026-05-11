@@ -27,10 +27,9 @@ from core.loader import (
 )
 
 class TestLoader(unittest.TestCase):
-    """Test cases for loader module."""
+
     
     def setUp(self):
-        """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
         self.project_root = Path(self.temp_dir)
         
@@ -38,9 +37,11 @@ class TestLoader(unittest.TestCase):
         (self.project_root / "langs").mkdir()
         (self.project_root / "user").mkdir()
         
-        # Mock the PROJECT_ROOT in loader
+        # Mock the PROJECT_ROOT and CONFIG_DIR in loader
         self.mock_root_patcher = patch('core.loader.PROJECT_ROOT', self.project_root)
         self.mock_root = self.mock_root_patcher.start()
+        self.mock_config_patcher = patch('core.loader.CONFIG_DIR', self.project_root)
+        self.mock_config = self.mock_config_patcher.start()
         
         # Create sample valid language data
         self.valid_lang_data = {
@@ -91,10 +92,10 @@ class TestLoader(unittest.TestCase):
     def tearDown(self):
         """Tear down test fixtures."""
         self.mock_root_patcher.stop()
+        self.mock_config_patcher.stop()
         shutil.rmtree(self.temp_dir)
     
     def test_load_json_file_exists(self):
-        """Test loading existing JSON file."""
         test_file = self.project_root / "test.json"
         test_data = {"key": "value", "number": 42, "nested": {"inner": "data"}}
         
@@ -107,13 +108,11 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result["nested"]["inner"], "data")
     
     def test_load_json_file_not_exists(self):
-        """Test loading non-existent JSON file returns empty dict."""
         test_file = self.project_root / "nonexistent.json"
         result = load_json_file(test_file)
         self.assertEqual(result, {})
     
     def test_load_json_file_invalid_json(self):
-        """Test loading invalid JSON file returns empty dict."""
         test_file = self.project_root / "invalid.json"
         with open(test_file, 'w', encoding='utf-8') as f:
             f.write("{invalid json content without proper format")
@@ -122,7 +121,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result, {})
     
     def test_load_json_file_empty_file(self):
-        """Test loading empty JSON file returns empty dict."""
         test_file = self.project_root / "empty.json"
         with open(test_file, 'w', encoding='utf-8') as f:
             f.write("")
@@ -131,7 +129,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result, {})
     
     def test_load_language_exists(self):
-        """Test loading existing language file."""
         lang_file = self.project_root / "langs" / "en.json"
         
         with open(lang_file, 'w', encoding='utf-8') as f:
@@ -145,12 +142,10 @@ class TestLoader(unittest.TestCase):
         self.assertIn("space", result["categories"]["system"]["commands"])
     
     def test_load_language_not_exists(self):
-        """Test loading non-existent language file returns empty dict."""
         result = load_language("nonexistent_language_xyz")
         self.assertEqual(result, {})
     
     def test_load_language_with_special_chars(self):
-        """Test loading language with special characters in filename."""
         lang_file = self.project_root / "langs" / "ar.json"
         arabic_data = {
             "language": "ar",
@@ -173,7 +168,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result["categories"]["system"]["name"], "معلومات النظام")
     
     def test_load_user_custom_exists(self):
-        """Test loading existing user custom file."""
         custom_file = self.project_root / "user" / "custom.json"
         
         with open(custom_file, 'w', encoding='utf-8') as f:
@@ -185,12 +179,10 @@ class TestLoader(unittest.TestCase):
         self.assertIn("mybackup", result["categories"]["my_commands"]["commands"])
     
     def test_load_user_custom_not_exists(self):
-        """Test loading non-existent user custom file returns empty dict."""
         result = load_user_custom()
         self.assertEqual(result, {})
     
     def test_load_user_modified_exists(self):
-        """Test loading existing user modified file."""
         modified_file = self.project_root / "user" / "modified.json"
         
         with open(modified_file, 'w', encoding='utf-8') as f:
@@ -202,12 +194,10 @@ class TestLoader(unittest.TestCase):
         self.assertIn("space", result["categories"]["system"]["commands"])
     
     def test_load_user_modified_not_exists(self):
-        """Test loading non-existent user modified file returns empty dict."""
         result = load_user_modified()
         self.assertEqual(result, {})
     
     def test_merge_commands_basic(self):
-        """Test basic command merging with no customizations."""
         result = merge_commands(self.valid_lang_data, {}, {})
         
         self.assertIn("categories", result)
@@ -219,7 +209,6 @@ class TestLoader(unittest.TestCase):
         self.assertIn("ping", result["categories"]["network"]["commands"])
     
     def test_merge_commands_with_user_custom(self):
-        """Test merging with user custom commands."""
         result = merge_commands(self.valid_lang_data, self.user_custom_data, {})
         
         # Built-in categories still exist
@@ -236,7 +225,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(len(result["categories"]), 3)
     
     def test_merge_commands_with_user_modified_override(self):
-        """Test that user modified commands override built-in ones."""
         result = merge_commands(self.valid_lang_data, {}, self.user_modified_data)
         
         cmd_info = result["categories"]["system"]["commands"]["space"]
@@ -248,7 +236,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result["categories"]["network"]["commands"]["ip"]["cmd"], "ip a")
     
     def test_merge_commands_with_both_custom_and_modified(self):
-        """Test merging with both custom and modified commands."""
         result = merge_commands(self.valid_lang_data, self.user_custom_data, self.user_modified_data)
         
         # Modified command overrides built-in
@@ -263,7 +250,6 @@ class TestLoader(unittest.TestCase):
         self.assertIn("ip", result["categories"]["network"]["commands"])
     
     def test_merge_commands_empty_lang_data(self):
-        """Test merging with empty language data."""
         result = merge_commands({}, self.user_custom_data, {})
         
         self.assertIn("categories", result)
@@ -271,14 +257,12 @@ class TestLoader(unittest.TestCase):
         self.assertIn("mybackup", result["categories"]["my_commands"]["commands"])
     
     def test_merge_commands_all_empty(self):
-        """Test merging when all inputs are empty."""
         result = merge_commands({}, {}, {})
         
         self.assertIn("categories", result)
         self.assertEqual(len(result["categories"]), 0)
     
     def test_get_all_commands(self):
-        """Test extracting all commands into flat dictionary."""
         result = get_all_commands(self.valid_lang_data)
         
         self.assertEqual(len(result), 4)
@@ -297,7 +281,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result["ping"]["category"], "Network")
     
     def test_get_all_commands_with_custom_categories(self):
-        """Test extracting commands from data with custom categories."""
         merged = merge_commands(self.valid_lang_data, self.user_custom_data, {})
         result = get_all_commands(merged)
         
@@ -307,7 +290,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result["mybackup"]["args"], 2)
     
     def test_get_all_commands_empty(self):
-        """Test extracting commands from empty data."""
         result = get_all_commands({})
         self.assertEqual(result, {})
         
@@ -315,7 +297,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result, {})
     
     def test_find_command_exists(self):
-        """Test finding existing command."""
         result = find_command("space", self.valid_lang_data)
         self.assertIsNotNone(result)
         self.assertEqual(result["cmd"], "df -h")
@@ -327,7 +308,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result["args"], 1)
     
     def test_find_command_case_sensitive(self):
-        """Test that command search is case-sensitive."""
         result = find_command("SPACE", self.valid_lang_data)
         self.assertIsNone(result)
         
@@ -335,12 +315,10 @@ class TestLoader(unittest.TestCase):
         self.assertIsNone(result)
     
     def test_find_command_not_exists(self):
-        """Test finding non-existent command returns None."""
         result = find_command("nonexistent_command_xyz", self.valid_lang_data)
         self.assertIsNone(result)
     
     def test_find_command_in_merged_data(self):
-        """Test finding command in merged data with customizations."""
         merged = merge_commands(self.valid_lang_data, self.user_custom_data, self.user_modified_data)
         
         # Find built-in command that was modified
@@ -356,7 +334,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result["cmd"], "ip a")
     
     def test_load_json_file_unicode(self):
-        """Test loading JSON file with Unicode characters."""
         test_file = self.project_root / "unicode.json"
         test_data = {"message": "مرحبا بالعالم", "emoji": "😀🎉"}
         
@@ -368,7 +345,6 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(result["emoji"], "😀🎉")
     
     def test_load_language_with_complex_structure(self):
-        """Test loading language file with complex command structure."""
         complex_data = {
             "language": "test",
             "name": "Test Language",

@@ -5,181 +5,766 @@
     "system_info": {
       "name": "معلومات النظام",
       "commands": {
-        "space": { "cmd": "df -h", "description": "عرض مساحة التخزين المستخدمة", "args": 0 },
-        "space inode": { "cmd": "df -i", "description": "عرض استهلاك الإنود", "args": 0 },
-        "space here": { "cmd": "du -sh .", "description": "حجم المجلد الحالي", "args": 0 },
-        "space folder": { "cmd": "du -sh {}", "description": "حجم مجلد محدد", "args": 1 },
-        "ram": { "cmd": "free -h", "description": "عرض استخدام الذاكرة العشوائية", "args": 0 },
-        "ram detailed": { "cmd": "free -h -t", "description": "الذاكرة مع الإجمالي", "args": 0 },
-        "cpu": { "cmd": "top -bn2 | grep 'Cpu(s)' | tail -1 | awk '{print $2 + $4}'", "description": "نسبة استخدام المعالج", "args": 0 },
-        "cpu cores": { "cmd": "nproc", "description": "عدد أنوية المعالج", "args": 0 },
-        "cpu info": { "cmd": "lscpu | grep 'Model name'", "description": "طراز المعالج", "args": 0 },
-        "battery": { "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to empty'", "description": "نسبة البطارية والوقت المتبقي", "args": 0 },
-        "battery full": { "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to full'", "description": "وقت الشحن الكامل", "args": 0 },
-        "uptime": { "cmd": "uptime -p", "description": "مدة تشغيل الجهاز بصيغة واضحة", "args": 0 },
-        "uptime raw": { "cmd": "uptime", "description": "مدة التشغيل خام", "args": 0 },
-        "os": { "cmd": "cat /etc/os-release | grep PRETTY_NAME | cut -d= -f2", "description": "اسم نظام التشغيل", "args": 0 },
-        "kernel": { "cmd": "uname -r", "description": "إصدار النواة", "args": 0 },
-        "users": { "cmd": "who", "description": "المستخدمين المتصلين حالياً", "args": 0 },
-        "date": { "cmd": "date", "description": "التاريخ والوقت الحاليان", "args": 0 },
-        "calendar": { "cmd": "cal", "description": "تقويم الشهر الحالي", "args": 0 },
-        "calendar year": { "cmd": "cal {}", "description": "تقويم سنة محددة", "args": 1 },
-        "temperature": { "cmd": "sensors | grep 'Core 0'", "description": "حرارة المعالج", "args": 0 },
-        "disk health": { "cmd": "sudo smartctl -H /dev/sda", "description": "فحص صحة القرص", "args": 0 }
+        "space": {
+          "cmd": "df -h",
+          "description": "عرض مساحة التخزين المستخدمة",
+          "args": 0
+        },
+        "space inode": {
+          "cmd": "df -i",
+          "description": "عرض استهلاك الإنود",
+          "args": 0
+        },
+        "space here": {
+          "cmd": "du -sh .",
+          "description": "حجم المجلد الحالي",
+          "args": 0
+        },
+        "space folder": {
+          "cmd": "du -sh {}",
+          "description": "حجم مجلد محدد",
+          "args": 1
+        },
+        "ram": {
+          "cmd": "free -h",
+          "description": "عرض استخدام الذاكرة العشوائية",
+          "args": 0
+        },
+        "ram detailed": {
+          "cmd": "free -h -t",
+          "description": "الذاكرة مع الإجمالي",
+          "args": 0
+        },
+        "cpu": {
+          "cmd": "top -bn2 | grep 'Cpu(s)' | tail -1 | awk '{print $2 + $4}'",
+          "description": "نسبة استخدام المعالج",
+          "args": 0
+        },
+        "cpu cores": {
+          "cmd": "nproc",
+          "description": "عدد أنوية المعالج",
+          "args": 0
+        },
+        "cpu info": {
+          "cmd": "lscpu | grep 'Model name'",
+          "description": "طراز المعالج",
+          "args": 0
+        },
+        "battery": {
+          "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to empty'",
+          "description": "نسبة البطارية والوقت المتبقي",
+          "args": 0
+        },
+        "battery full": {
+          "cmd": "upower -i $(upower -e | grep BAT) | grep -E 'percentage|to full'",
+          "description": "وقت الشحن الكامل",
+          "args": 0
+        },
+        "uptime": {
+          "cmd": "uptime -p",
+          "description": "مدة تشغيل الجهاز بصيغة واضحة",
+          "args": 0
+        },
+        "uptime raw": {
+          "cmd": "uptime",
+          "description": "مدة التشغيل خام",
+          "args": 0
+        },
+        "os": {
+          "cmd": "cat /etc/os-release | grep PRETTY_NAME | cut -d= -f2",
+          "description": "اسم نظام التشغيل",
+          "args": 0
+        },
+        "kernel": {
+          "cmd": "uname -r",
+          "description": "إصدار النواة",
+          "args": 0
+        },
+        "users": {
+          "cmd": "who",
+          "description": "المستخدمين المتصلين حالياً",
+          "args": 0
+        },
+        "date": {
+          "cmd": "date",
+          "description": "التاريخ والوقت الحاليان",
+          "args": 0
+        },
+        "calendar": {
+          "cmd": "cal",
+          "description": "تقويم الشهر الحالي",
+          "args": 0
+        },
+        "calendar year": {
+          "cmd": "cal {}",
+          "description": "تقويم سنة محددة",
+          "args": 1
+        },
+        "temperature": {
+          "cmd": "sensors | grep -E 'Core 0|Tctl|CPUTIN|Package id'",
+          "description": "حرارة المعالج",
+          "args": 0
+        },
+        "disk health": {
+          "cmd": "smartctl -H /dev/sda",
+          "description": "فحص صحة القرص",
+          "args": 0
+        }
       }
     },
     "file_operations": {
       "name": "عمليات الملفات",
       "commands": {
-        "list": { "cmd": "ls -la", "description": "عرض كل الملفات (بما فيها المخفية)", "args": 0 },
-        "list long": { "cmd": "ls -l", "description": "عرض بتفاصيل", "args": 0 },
-        "list all": { "cmd": "ls -a", "description": "يشمل المخفي", "args": 0 },
-        "list large": { "cmd": "ls -laS", "description": "ترتيب حسب الحجم", "args": 0 },
-        "list recent": { "cmd": "ls -lat", "description": "ترتيب حسب التاريخ", "args": 0 },
-        "tree": { "cmd": "tree", "description": "هيكل الشجرة", "args": 0 },
-        "tree depth": { "cmd": "tree -L {}", "description": "شجرة بعمق محدد", "args": 1 },
-        "copy": { "cmd": "cp -r {} {}", "description": "نسخ ملف أو مجلد", "args": 2 },
-        "copy preserve": { "cmd": "cp -rp {} {}", "description": "نسخ مع الاحتفاظ بالصلاحيات", "args": 2 },
-        "move": { "cmd": "mv {} {}", "description": "نقل أو إعادة تسمية", "args": 2 },
-        "delete": { "cmd": "rm -i {}", "description": "حذف بتأكيد", "args": 1 },
-        "delete force": { "cmd": "rm -f {}", "description": "حذف بدون تأكيد", "args": 1 },
-        "delete folder": { "cmd": "rm -rf {}", "description": "حذف مجلد بالكامل", "args": 1 },
-        "create folder": { "cmd": "mkdir -p {}", "description": "إنشاء مجلد", "args": 1 },
-        "create file": { "cmd": "touch {}", "description": "إنشاء ملف فارغ", "args": 1 },
-        "rename": { "cmd": "mv {} {}", "description": "إعادة تسمية", "args": 2 },
-        "open folder": { "cmd": "xdg-open {}", "description": "فتح المجلد في المستكشف", "args": 1 },
-        "open file": { "cmd": "xdg-open {}", "description": "فتح ملف بالبرنامج الافتراضي", "args": 1 },
-        "zip": { "cmd": "zip -r {}.zip {}", "description": "ضغط إلى zip", "args": 2 },
-        "unzip": { "cmd": "unzip {}", "description": "فك ضغط zip", "args": 1 },
-        "tar compress": { "cmd": "tar -czvf {}.tar.gz {}", "description": "ضغط إلى tar.gz", "args": 2 },
-        "tar extract": { "cmd": "tar -xzvf {}", "description": "فك ضغط tar.gz", "args": 1 },
-        "find name": { "cmd": "find . -name {}", "description": "البحث باسم ملف", "args": 1 },
-        "find text": { "cmd": "grep -r {} .", "description": "البحث عن نص داخل ملفات", "args": 1 },
-        "find large": { "cmd": "find . -type f -size +{}M", "description": "ملفات أكبر من ميجابايت", "args": 1 },
-        "find empty": { "cmd": "find . -empty", "description": "ملفات أو مجلدات فارغة", "args": 0 },
-        "permissions": { "cmd": "stat -c '%a %n' {}", "description": "عرض صلاحيات ملف", "args": 1 },
-        "chmod": { "cmd": "chmod {} {}", "description": "تغيير صلاحيات", "args": 2 }
+        "list": {
+          "cmd": "ls -la",
+          "description": "عرض كل الملفات (بما فيها المخفية)",
+          "args": 0
+        },
+        "list long": {
+          "cmd": "ls -l",
+          "description": "عرض بتفاصيل",
+          "args": 0
+        },
+        "list all": {
+          "cmd": "ls -a",
+          "description": "يشمل المخفي",
+          "args": 0
+        },
+        "list large": {
+          "cmd": "ls -laS",
+          "description": "ترتيب حسب الحجم",
+          "args": 0
+        },
+        "list recent": {
+          "cmd": "ls -lat",
+          "description": "ترتيب حسب التاريخ",
+          "args": 0
+        },
+        "tree": {
+          "cmd": "tree",
+          "description": "هيكل الشجرة",
+          "args": 0
+        },
+        "tree depth": {
+          "cmd": "tree -L {}",
+          "description": "شجرة بعمق محدد",
+          "args": 1
+        },
+        "copy": {
+          "cmd": "cp -r {} {}",
+          "description": "نسخ ملف أو مجلد",
+          "args": 2
+        },
+        "copy preserve": {
+          "cmd": "cp -rp {} {}",
+          "description": "نسخ مع الاحتفاظ بالصلاحيات",
+          "args": 2
+        },
+        "move": {
+          "cmd": "mv {} {}",
+          "description": "نقل أو إعادة تسمية",
+          "args": 2
+        },
+        "delete": {
+          "cmd": "rm {}",
+          "description": "حذف ملف",
+          "args": 1
+        },
+        "delete force": {
+          "cmd": "rm -f {}",
+          "description": "حذف بدون تأكيد",
+          "args": 1
+        },
+        "delete folder": {
+          "cmd": "rm -r {}",
+          "description": "حذف مجلد ومحتوياته",
+          "args": 1
+        },
+        "create folder": {
+          "cmd": "mkdir -p {}",
+          "description": "إنشاء مجلد",
+          "args": 1
+        },
+        "create file": {
+          "cmd": "touch {}",
+          "description": "إنشاء ملف فارغ",
+          "args": 1
+        },
+        "rename": {
+          "cmd": "mv {} {}",
+          "description": "إعادة تسمية",
+          "args": 2
+        },
+        "open folder": {
+          "cmd": "xdg-open {}",
+          "description": "فتح المجلد في المستكشف",
+          "args": 1
+        },
+        "open file": {
+          "cmd": "xdg-open {}",
+          "description": "فتح ملف بالبرنامج الافتراضي",
+          "args": 1
+        },
+        "zip": {
+          "cmd": "zip -r {}.zip {}",
+          "description": "ضغط إلى zip",
+          "args": 2
+        },
+        "unzip": {
+          "cmd": "unzip {}",
+          "description": "فك ضغط zip",
+          "args": 1
+        },
+        "tar compress": {
+          "cmd": "tar -czvf {}.tar.gz {}",
+          "description": "ضغط إلى tar.gz",
+          "args": 2
+        },
+        "tar extract": {
+          "cmd": "tar -xzvf {}",
+          "description": "فك ضغط tar.gz",
+          "args": 1
+        },
+        "find name": {
+          "cmd": "find . -name {}",
+          "description": "البحث باسم ملف",
+          "args": 1
+        },
+        "find text": {
+          "cmd": "grep -r {} .",
+          "description": "البحث عن نص داخل ملفات",
+          "args": 1
+        },
+        "find large": {
+          "cmd": "find . -type f -size +{}M",
+          "description": "ملفات أكبر من ميجابايت",
+          "args": 1
+        },
+        "find empty": {
+          "cmd": "find . -empty",
+          "description": "ملفات أو مجلدات فارغة",
+          "args": 0
+        },
+        "permissions": {
+          "cmd": "stat -c '%a %n' {}",
+          "description": "عرض صلاحيات ملف",
+          "args": 1
+        },
+        "chmod": {
+          "cmd": "chmod -v {} {}",
+          "description": "تغيير صلاحيات",
+          "args": 2
+        }
       }
     },
     "network": {
       "name": "الشبكة",
       "commands": {
-        "ip": { "cmd": "ip -br a", "description": "عنوان IP المحلي", "args": 0 },
-        "ip public": { "cmd": "curl -s ifconfig.me", "description": "IP العام", "args": 0 },
-        "ip location": { "cmd": "curl -s ipinfo.io/{}", "description": "موقع IP الجغرافي", "args": 1 },
-        "wifi": { "cmd": "nmcli device wifi list", "description": "قائمة شبكات الواي فاي", "args": 0 },
-        "wifi connect": { "cmd": "nmcli device wifi connect {} password {}", "description": "الاتصال بشبكة واي فاي", "args": 2 },
-        "wifi disconnect": { "cmd": "nmcli device disconnect wlan0", "description": "قطع اتصال الواي فاي", "args": 0 },
-        "wifi off": { "cmd": "nmcli radio wifi off", "description": "إيقاف الراديو", "args": 0 },
-        "wifi on": { "cmd": "nmcli radio wifi on", "description": "تشغيل الراديو", "args": 0 },
-        "ping": { "cmd": "ping -c 4 {}", "description": "اختبار اتصال (4 مرات)", "args": 1 },
-        "ping continuous": { "cmd": "ping {}", "description": "اختبار اتصال مستمر", "args": 1 },
-        "ports": { "cmd": "ss -tuln", "description": "المنافذ المفتوحة", "args": 0 },
-        "ports listening": { "cmd": "ss -tln", "description": "منافذ في حالة استماع", "args": 0 },
-        "firewall status": { "cmd": "sudo ufw status", "description": "حالة الجدار الناري", "args": 0 },
-        "firewall enable": { "cmd": "sudo ufw enable", "description": "تفعيل الجدار الناري", "args": 0 },
-        "firewall disable": { "cmd": "sudo ufw disable", "description": "تعطيل الجدار الناري", "args": 0 },
-        "download": { "cmd": "wget {}", "description": "تحميل ملف", "args": 1 },
-        "download resume": { "cmd": "wget -c {}", "description": "استكمال تحميل متقطع", "args": 1 },
-        "speedtest": { "cmd": "speedtest-cli", "description": "اختبار سرعة الإنترنت", "args": 0 },
-        "dns": { "cmd": "cat /etc/resolv.conf", "description": "خوادم DNS", "args": 0 },
-        "hostname": { "cmd": "hostname", "description": "اسم الجهاز", "args": 0 }
+        "ip": {
+          "cmd": "ip -br a",
+          "description": "عنوان IP المحلي",
+          "args": 0
+        },
+        "ip public": {
+          "cmd": "curl -s ifconfig.me",
+          "description": "IP العام",
+          "args": 0
+        },
+        "ip location": {
+          "cmd": "curl -s ipinfo.io/{}",
+          "description": "موقع IP الجغرافي",
+          "args": 1
+        },
+        "wifi": {
+          "cmd": "nmcli device wifi list",
+          "description": "قائمة شبكات الواي فاي",
+          "args": 0
+        },
+        "wifi connect": {
+          "cmd": "nmcli device wifi connect {} password {}",
+          "description": "الاتصال بشبكة واي فاي",
+          "args": 2
+        },
+        "wifi disconnect": {
+          "cmd": "nmcli device disconnect wlan0",
+          "description": "قطع اتصال الواي فاي",
+          "args": 0
+        },
+        "wifi off": {
+          "cmd": "nmcli radio wifi off",
+          "description": "إيقاف الراديو",
+          "args": 0
+        },
+        "wifi on": {
+          "cmd": "nmcli radio wifi on",
+          "description": "تشغيل الراديو",
+          "args": 0
+        },
+        "ping": {
+          "cmd": "ping -c 4 {}",
+          "description": "اختبار اتصال (4 مرات)",
+          "args": 1
+        },
+        "ping continuous": {
+          "cmd": "ping {}",
+          "description": "اختبار اتصال مستمر",
+          "args": 1
+        },
+        "ports": {
+          "cmd": "ss -tuln",
+          "description": "المنافذ المفتوحة",
+          "args": 0
+        },
+        "ports listening": {
+          "cmd": "ss -tln",
+          "description": "منافذ في حالة استماع",
+          "args": 0
+        },
+        "firewall status": {
+          "cmd": "ufw status",
+          "description": "حالة الجدار الناري",
+          "args": 0
+        },
+        "firewall enable": {
+          "cmd": "ufw enable",
+          "description": "تفعيل الجدار الناري",
+          "args": 0
+        },
+        "firewall disable": {
+          "cmd": "ufw disable",
+          "description": "تعطيل الجدار الناري",
+          "args": 0
+        },
+        "download": {
+          "cmd": "wget {}",
+          "description": "تحميل ملف",
+          "args": 1
+        },
+        "download resume": {
+          "cmd": "wget -c {}",
+          "description": "استكمال تحميل متقطع",
+          "args": 1
+        },
+        "speedtest": {
+          "cmd": "speedtest-cli",
+          "description": "اختبار سرعة الإنترنت",
+          "args": 0
+        },
+        "dns": {
+          "cmd": "cat /etc/resolv.conf",
+          "description": "خوادم DNS",
+          "args": 0
+        },
+        "hostname": {
+          "cmd": "hostname",
+          "description": "اسم الجهاز",
+          "args": 0
+        }
       }
     },
     "system_control": {
       "name": "التحكم بالنظام",
       "commands": {
-        "shutdown": { "cmd": "shutdown now", "description": "إيقاف تشغيل فوري", "args": 0 },
-        "shutdown time": { "cmd": "shutdown +{}", "description": "إيقاف بعد دقائق", "args": 1 },
-        "cancel shutdown": { "cmd": "shutdown -c", "description": "إلغاء إيقاف مجدول", "args": 0 },
-        "restart": { "cmd": "reboot", "description": "إعادة تشغيل", "args": 0 },
-        "suspend": { "cmd": "systemctl suspend", "description": "تعليق (سكون)", "args": 0 },
-        "hibernate": { "cmd": "systemctl hibernate", "description": "إسبات", "args": 0 },
-        "lock": { "cmd": "loginctl lock-session", "description": "قفل الشاشة", "args": 0 },
-        "logout": { "cmd": "gnome-session-quit --no-prompt", "description": "تسجيل خروج", "args": 0 },
-        "update": { "cmd": "sudo apt update && sudo apt upgrade -y", "description": "تحديث كامل للنظام", "args": 0 },
-        "update check": { "cmd": "sudo apt update", "description": "التحقق من التحديثات فقط", "args": 0 },
-        "upgrade": { "cmd": "sudo apt upgrade -y", "description": "ترقية الحزم", "args": 0 },
-        "clean": { "cmd": "sudo apt autoremove -y && sudo apt autoclean", "description": "تنظيف النظام", "args": 0 },
-        "brightness up": { "cmd": "brightnessctl set +10%", "description": "زيادة السطوع", "args": 0 },
-        "brightness down": { "cmd": "brightnessctl set 10%-", "description": "خفض السطوع", "args": 0 },
-        "brightness set": { "cmd": "brightnessctl set {}%", "description": "ضبط نسبة السطوع", "args": 1 },
-        "volume up": { "cmd": "pactl set-sink-volume @DEFAULT_SINK@ +5%", "description": "رفع الصوت", "args": 0 },
-        "volume down": { "cmd": "pactl set-sink-volume @DEFAULT_SINK@ -5%", "description": "خفض الصوت", "args": 0 },
-        "volume set": { "cmd": "pactl set-sink-volume @DEFAULT_SINK@ {}%", "description": "ضبط نسبة الصوت", "args": 1 },
-        "mute": { "cmd": "pactl set-sink-mute @DEFAULT_SINK@ toggle", "description": "كتم/إلغاء كتم الصوت", "args": 0 }
+        "shutdown": {
+          "cmd": "shutdown +1",
+          "description": "إيقاف تشغيل فوري",
+          "args": 0
+        },
+        "shutdown time": {
+          "cmd": "shutdown +{}",
+          "description": "إيقاف بعد دقائق",
+          "args": 1
+        },
+        "cancel shutdown": {
+          "cmd": "shutdown -c",
+          "description": "إلغاء إيقاف مجدول",
+          "args": 0
+        },
+        "restart": {
+          "cmd": "shutdown -r +1",
+          "description": "إعادة تشغيل",
+          "args": 0
+        },
+        "suspend": {
+          "cmd": "systemctl suspend",
+          "description": "تعليق (سكون)",
+          "args": 0
+        },
+        "hibernate": {
+          "cmd": "systemctl hibernate",
+          "description": "إسبات",
+          "args": 0
+        },
+        "lock": {
+          "cmd": "loginctl lock-session",
+          "description": "قفل الشاشة",
+          "args": 0
+        },
+        "logout": {
+          "cmd": "gnome-session-quit",
+          "description": "تسجيل خروج",
+          "args": 0
+        },
+        "update": {
+          "cmd": "apt update && sudo apt upgrade",
+          "description": "تحديث كامل للنظام",
+          "args": 0
+        },
+        "update check": {
+          "cmd": "apt update",
+          "description": "التحقق من التحديثات فقط",
+          "args": 0
+        },
+        "upgrade": {
+          "cmd": "apt upgrade",
+          "description": "ترقية الحزم",
+          "args": 0
+        },
+        "clean": {
+          "cmd": "apt autoremove && sudo apt autoclean",
+          "description": "تنظيف النظام",
+          "args": 0
+        },
+        "brightness up": {
+          "cmd": "brightnessctl set +10%",
+          "description": "زيادة السطوع",
+          "args": 0
+        },
+        "brightness down": {
+          "cmd": "brightnessctl set 10%-",
+          "description": "خفض السطوع",
+          "args": 0
+        },
+        "brightness set": {
+          "cmd": "brightnessctl set {}%",
+          "description": "ضبط نسبة السطوع",
+          "args": 1
+        },
+        "volume up": {
+          "cmd": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+          "description": "رفع الصوت",
+          "args": 0
+        },
+        "volume down": {
+          "cmd": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+          "description": "خفض الصوت",
+          "args": 0
+        },
+        "volume set": {
+          "cmd": "pactl set-sink-volume @DEFAULT_SINK@ {}%",
+          "description": "ضبط نسبة الصوت",
+          "args": 1
+        },
+        "mute": {
+          "cmd": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+          "description": "كتم/إلغاء كتم الصوت",
+          "args": 0
+        }
       }
     },
     "processes": {
       "name": "إدارة العمليات",
       "commands": {
-        "processes": { "cmd": "ps aux", "description": "كل العمليات", "args": 0 },
-        "processes user": { "cmd": "ps aux | grep {}", "description": "عمليات مستخدم محدد", "args": 1 },
-        "top": { "cmd": "top", "description": "مراقبة تفاعلية", "args": 0 },
-        "htop": { "cmd": "htop", "description": "مراقبة متطورة", "args": 0 },
-        "kill": { "cmd": "kill {}", "description": "إنهاء برقم العملية", "args": 1 },
-        "kill name": { "cmd": "pkill {}", "description": "إنهاء بالاسم", "args": 1 },
-        "force kill": { "cmd": "kill -9 {}", "description": "إنهاء إجباري", "args": 1 },
-        "memory hog": { "cmd": "ps aux --sort=-%mem | head -10", "description": "أكثر 10 عمليات استهلاكاً للذاكرة", "args": 0 },
-        "cpu hog": { "cmd": "ps aux --sort=-%cpu | head -10", "description": "أكثر 10 عمليات استهلاكاً للمعالج", "args": 0 },
-        "service status": { "cmd": "systemctl status {}", "description": "حالة الخدمة", "args": 1 },
-        "service start": { "cmd": "sudo systemctl start {}", "description": "تشغيل خدمة", "args": 1 },
-        "service stop": { "cmd": "sudo systemctl stop {}", "description": "إيقاف خدمة", "args": 1 },
-        "service restart": { "cmd": "sudo systemctl restart {}", "description": "إعادة تشغيل خدمة", "args": 1 },
-        "service enable": { "cmd": "sudo systemctl enable {}", "description": "تفعيل خدمة عند البدء", "args": 1 },
-        "service disable": { "cmd": "sudo systemctl disable {}", "description": "تعطيل خدمة", "args": 1 }
+        "processes": {
+          "cmd": "ps aux",
+          "description": "كل العمليات",
+          "args": 0
+        },
+        "processes user": {
+          "cmd": "ps aux | grep {}",
+          "description": "عمليات مستخدم محدد",
+          "args": 1
+        },
+        "top": {
+          "cmd": "top",
+          "description": "مراقبة تفاعلية",
+          "args": 0
+        },
+        "htop": {
+          "cmd": "htop",
+          "description": "مراقبة متطورة",
+          "args": 0
+        },
+        "kill": {
+          "cmd": "kill {}",
+          "description": "إنهاء برقم العملية",
+          "args": 1
+        },
+        "kill name": {
+          "cmd": "pkill {}",
+          "description": "إنهاء بالاسم",
+          "args": 1
+        },
+        "force kill": {
+          "cmd": "kill -15 {}",
+          "description": "إنهاء إجباري",
+          "args": 1
+        },
+        "memory hog": {
+          "cmd": "ps aux --sort=-%mem | head -10",
+          "description": "أكثر 10 عمليات استهلاكاً للذاكرة",
+          "args": 0
+        },
+        "cpu hog": {
+          "cmd": "ps aux --sort=-%cpu | head -10",
+          "description": "أكثر 10 عمليات استهلاكاً للمعالج",
+          "args": 0
+        },
+        "service status": {
+          "cmd": "systemctl status {}",
+          "description": "حالة الخدمة",
+          "args": 1
+        },
+        "service start": {
+          "cmd": "systemctl start {}",
+          "description": "تشغيل خدمة",
+          "args": 1
+        },
+        "service stop": {
+          "cmd": "systemctl stop {}",
+          "description": "إيقاف خدمة",
+          "args": 1
+        },
+        "service restart": {
+          "cmd": "systemctl restart {}",
+          "description": "إعادة تشغيل خدمة",
+          "args": 1
+        },
+        "service enable": {
+          "cmd": "systemctl enable {}",
+          "description": "تفعيل خدمة عند البدء",
+          "args": 1
+        },
+        "service disable": {
+          "cmd": "systemctl disable {}",
+          "description": "تعطيل خدمة",
+          "args": 1
+        }
       }
     },
     "development": {
       "name": "التطوير",
       "commands": {
-        "git status": { "cmd": "git status", "description": "حالة المستودع", "args": 0 },
-        "git pull": { "cmd": "git pull", "description": "سحب التغييرات", "args": 0 },
-        "git push": { "cmd": "git push", "description": "دفع التغييرات", "args": 0 },
-        "git commit": { "cmd": "git commit -m {}", "description": "تسجيل التغيير مع رسالة", "args": 1 },
-        "git add": { "cmd": "git add {}", "description": "إضافة ملف", "args": 1 },
-        "git add all": { "cmd": "git add .", "description": "إضافة كل الملفات", "args": 0 },
-        "git log": { "cmd": "git log --oneline -10", "description": "آخر 10 تغييرات", "args": 0 },
-        "git branch": { "cmd": "git branch", "description": "الفروع الموجودة", "args": 0 },
-        "git checkout": { "cmd": "git checkout {}", "description": "التبديل إلى فرع", "args": 1 },
-        "python run": { "cmd": "python3 {}", "description": "تشغيل سكريبت بايثون", "args": 1 },
-        "python repl": { "cmd": "python3", "description": "بيئة تفاعلية بايثون", "args": 0 },
-        "python install": { "cmd": "pip3 install {}", "description": "تثبيت حزمة بايثون", "args": 1 },
-        "node run": { "cmd": "node {}", "description": "تشغيل سكريبت جافاسكريبت", "args": 1 },
-        "node repl": { "cmd": "node", "description": "بيئة تفاعلية نود", "args": 0 },
-        "npm install": { "cmd": "npm install {}", "description": "تثبيت حزمة npm", "args": 1 },
-        "npm init": { "cmd": "npm init -y", "description": "بدء مشروع npm", "args": 0 },
-        "make": { "cmd": "make", "description": "تشغيل make", "args": 0 },
-        "make clean": { "cmd": "make clean", "description": "تنظيف الملفات المترجمة", "args": 0 },
-        "docker ps": { "cmd": "docker ps", "description": "عرض الحاويات", "args": 0 },
-        "docker ps all": { "cmd": "docker ps -a", "description": "عرض كل الحاويات", "args": 0 },
-        "docker stop": { "cmd": "docker stop {}", "description": "إيقاف حاوية", "args": 1 },
-        "docker rm": { "cmd": "docker rm {}", "description": "حذف حاوية", "args": 1 },
-        "docker images": { "cmd": "docker images", "description": "عرض الصور", "args": 0 },
-        "docker rmi": { "cmd": "docker rmi {}", "description": "حذف صورة", "args": 1 }
+        "git status": {
+          "cmd": "git status",
+          "description": "حالة المستودع",
+          "args": 0
+        },
+        "git pull": {
+          "cmd": "git pull",
+          "description": "سحب التغييرات",
+          "args": 0
+        },
+        "git push": {
+          "cmd": "git push",
+          "description": "دفع التغييرات",
+          "args": 0
+        },
+        "git commit": {
+          "cmd": "git commit -m {}",
+          "description": "تسجيل التغيير مع رسالة",
+          "args": 1
+        },
+        "git add": {
+          "cmd": "git add {}",
+          "description": "إضافة ملف",
+          "args": 1
+        },
+        "git add all": {
+          "cmd": "git add .",
+          "description": "إضافة كل الملفات",
+          "args": 0
+        },
+        "git log": {
+          "cmd": "git log --oneline -10",
+          "description": "آخر 10 تغييرات",
+          "args": 0
+        },
+        "git branch": {
+          "cmd": "git branch",
+          "description": "الفروع الموجودة",
+          "args": 0
+        },
+        "git checkout": {
+          "cmd": "git checkout {}",
+          "description": "التبديل إلى فرع",
+          "args": 1
+        },
+        "python run": {
+          "cmd": "python3 {}",
+          "description": "تشغيل سكريبت بايثون",
+          "args": 1
+        },
+        "python repl": {
+          "cmd": "python3",
+          "description": "بيئة تفاعلية بايثون",
+          "args": 0
+        },
+        "python install": {
+          "cmd": "pip3 install {}",
+          "description": "تثبيت حزمة بايثون",
+          "args": 1
+        },
+        "node run": {
+          "cmd": "node {}",
+          "description": "تشغيل سكريبت جافاسكريبت",
+          "args": 1
+        },
+        "node repl": {
+          "cmd": "node",
+          "description": "بيئة تفاعلية نود",
+          "args": 0
+        },
+        "npm install": {
+          "cmd": "npm install {}",
+          "description": "تثبيت حزمة npm",
+          "args": 1
+        },
+        "npm init": {
+          "cmd": "npm init -y",
+          "description": "بدء مشروع npm",
+          "args": 0
+        },
+        "make": {
+          "cmd": "make",
+          "description": "تشغيل make",
+          "args": 0
+        },
+        "make clean": {
+          "cmd": "make clean",
+          "description": "تنظيف الملفات المترجمة",
+          "args": 0
+        },
+        "docker ps": {
+          "cmd": "docker ps",
+          "description": "عرض الحاويات",
+          "args": 0
+        },
+        "docker ps all": {
+          "cmd": "docker ps -a",
+          "description": "عرض كل الحاويات",
+          "args": 0
+        },
+        "docker stop": {
+          "cmd": "docker stop {}",
+          "description": "إيقاف حاوية",
+          "args": 1
+        },
+        "docker rm": {
+          "cmd": "docker rm {}",
+          "description": "حذف حاوية",
+          "args": 1
+        },
+        "docker images": {
+          "cmd": "docker images",
+          "description": "عرض الصور",
+          "args": 0
+        },
+        "docker rmi": {
+          "cmd": "docker rmi {}",
+          "description": "حذف صورة",
+          "args": 1
+        }
       }
     },
     "utilities": {
       "name": "أدوات مساعدة",
       "commands": {
-        "weather": { "cmd": "curl -s wttr.in/{}", "description": "حالة الطقس", "args": 1 },
-        "weather today": { "cmd": "curl -s wttr.in/{}?format=3", "description": "طقس مختصر", "args": 1 },
-        "translate": { "cmd": "trans '{}'", "description": "ترجمة نص", "args": 1 },
-        "timer": { "cmd": "sleep {} && paplay /usr/share/sounds/freedesktop/complete.oga", "description": "مؤقت بالثواني", "args": 1 },
-        "timer minutes": { "cmd": "sleep {}m && paplay /usr/share/sounds/freedesktop/complete.oga", "description": "مؤقت بالدقائق", "args": 1 },
-        "notes": { "cmd": "$EDITOR ~/ka_notes.txt", "description": "فتاح الملاحظات", "args": 0 },
-        "todo": { "cmd": "cat ~/ka_todo.txt", "description": "عرض قائمة المهام", "args": 0 },
-        "todo add": { "cmd": "echo {} >> ~/ka_todo.txt", "description": "إضافة مهمة", "args": 1 },
-        "todo remove": { "cmd": "sed -i '/{}/d' ~/ka_todo.txt", "description": "حذف مهمة", "args": 1 },
-        "screenshot": { "cmd": "gnome-screenshot -i", "description": "لقطة شاشة تفاعلية", "args": 0 },
-        "screenshot full": { "cmd": "gnome-screenshot", "description": "لقطة شاشة كاملة", "args": 0 },
-        "screenshot window": { "cmd": "gnome-screenshot -w", "description": "لقطة نافذة", "args": 0 },
-        "clipboard copy": { "cmd": "echo {} | xclip -selection clipboard", "description": "نسخ نص للحافظة", "args": 1 },
-        "clipboard paste": { "cmd": "xclip -selection clipboard -o", "description": "لصق من الحافظة", "args": 0 },
-        "history": { "cmd": "history | tail -20", "description": "آخر 20 أمراً كتبتها", "args": 0 },
-        "clear": { "cmd": "clear", "description": "مسح الشاشة", "args": 0 },
-        "echo": { "cmd": "echo {}", "description": "طباعة نص", "args": 1 },
-        "man": { "cmd": "man {}", "description": "دليل استخدام أمر", "args": 1 }
+        "weather": {
+          "cmd": "curl -s wttr.in/{}",
+          "description": "حالة الطقس",
+          "args": 1
+        },
+        "weather today": {
+          "cmd": "curl -s wttr.in/{}?format=3",
+          "description": "طقس مختصر",
+          "args": 1
+        },
+        "translate": {
+          "cmd": "trans '{}'",
+          "description": "ترجمة نص",
+          "args": 1
+        },
+        "timer": {
+          "cmd": "sleep {} && paplay /usr/share/sounds/freedesktop/complete.oga",
+          "description": "مؤقت بالثواني",
+          "args": 1
+        },
+        "timer minutes": {
+          "cmd": "sleep {}m && paplay /usr/share/sounds/freedesktop/complete.oga",
+          "description": "مؤقت بالدقائق",
+          "args": 1
+        },
+        "notes": {
+          "cmd": "$EDITOR $HOME/ka_notes.txt",
+          "description": "فتاح الملاحظات",
+          "args": 0
+        },
+        "todo": {
+          "cmd": "test -f $HOME/ka_todo.txt && cat $HOME/ka_todo.txt || echo '(empty)'",
+          "description": "عرض قائمة المهام",
+          "args": 0
+        },
+        "todo add": {
+          "cmd": "echo {} >> $HOME/ka_todo.txt",
+          "description": "إضافة مهمة",
+          "args": 1
+        },
+        "todo remove": {
+          "cmd": "test -f $HOME/ka_todo.txt && sed -i '/{}/d' $HOME/ka_todo.txt || echo 'empty'",
+          "description": "حذف مهمة",
+          "args": 1
+        },
+        "screenshot": {
+          "cmd": "gnome-screenshot -i",
+          "description": "لقطة شاشة تفاعلية",
+          "args": 0
+        },
+        "screenshot full": {
+          "cmd": "gnome-screenshot",
+          "description": "لقطة شاشة كاملة",
+          "args": 0
+        },
+        "screenshot window": {
+          "cmd": "gnome-screenshot -w",
+          "description": "لقطة نافذة",
+          "args": 0
+        },
+        "clipboard copy": {
+          "cmd": "echo {} | xclip -selection clipboard",
+          "description": "نسخ نص للحافظة",
+          "args": 1
+        },
+        "clipboard paste": {
+          "cmd": "xclip -selection clipboard -o",
+          "description": "لصق من الحافظة",
+          "args": 0
+        },
+        "history": {
+          "cmd": "history | tail -20",
+          "description": "آخر 20 أمراً كتبتها",
+          "args": 0
+        },
+        "clear": {
+          "cmd": "clear",
+          "description": "مسح الشاشة",
+          "args": 0
+        },
+        "echo": {
+          "cmd": "echo {}",
+          "description": "طباعة نص",
+          "args": 1
+        },
+        "man": {
+          "cmd": "man {}",
+          "description": "دليل استخدام أمر",
+          "args": 1
+        },
+        "weather local": {
+          "cmd": "curl -s wttr.in?format=4",
+          "description": "حالة الطقس",
+          "args": 0
+        }
       }
     }
   }

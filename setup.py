@@ -1,21 +1,8 @@
-#!/usr/bin/env python3
-
-"""
-Ka - Easy Linux Commands
-Setup script for pip installation
-Author: Abdelrahman Gaballah
-"""
-
 from setuptools import setup, find_packages
 from pathlib import Path
 
-# Read the contents of README file
 readme_path = Path(__file__).parent / "README.md"
-if readme_path.exists():
-    with open(readme_path, 'r', encoding='utf-8') as f:
-        long_description = f.read()
-else:
-    long_description = "Ka - Easy Linux Commands for beginners"
+long_description = readme_path.read_text(encoding='utf-8') if readme_path.exists() else "Ka - Easy Linux Commands for beginners"
 
 setup(
     name="ka-linux-commands",
@@ -39,41 +26,25 @@ setup(
         "Topic :: Utilities",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3 :: Only",
         "Operating System :: POSIX :: Linux",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.8",
     packages=find_packages(),
     include_package_data=True,
     entry_points={
         "console_scripts": [
-            "ka=ka:main",
+            "ka=core.cli:main",
         ],
     },
-    install_requires=[],  # No external dependencies
+    install_requires=[],
     extras_require={
-        "dev": [
-            "pytest>=7.0.0",
-            "pytest-cov>=4.0.0",
-        ],
-        "translation": [
-            "googletrans==4.0.0rc1",
-        ],
-        "ascii": [
-            "pyfiglet>=0.8.post1",
-        ],
+        "dev": ["pytest>=7.0.0", "pytest-cov>=4.0.0"],
+        "translation": ["googletrans==4.0.0rc1"],
+        "ascii": ["pyfiglet>=0.8.post1"],
     },
     package_data={
-        "ka": [
-            "langs/*.json",
-            "user/*.json",
-            "config.json",
-        ],
+        "": ["langs/*.json", "user/*.json", "config.json"],
     },
     data_files=[
         ("share/doc/ka", ["README.md", "LICENSE"]),
