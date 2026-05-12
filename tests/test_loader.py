@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 
-"""
-Ka - Easy Linux Commands
-Test module: test_loader.py
-Author: Abdelrahman Gaballah
-"""
+# Author: Abdelrahman Gaballah
 
 import unittest
 import json
@@ -33,7 +29,6 @@ class TestLoader(unittest.TestCase):
         self.temp_dir = tempfile.mkdtemp()
         self.project_root = Path(self.temp_dir)
         
-        # Create mock directories
         (self.project_root / "langs").mkdir()
         (self.project_root / "user").mkdir()
         
@@ -43,7 +38,6 @@ class TestLoader(unittest.TestCase):
         self.mock_config_patcher = patch('core.loader.CONFIG_DIR', self.project_root)
         self.mock_config = self.mock_config_patcher.start()
         
-        # Create sample valid language data
         self.valid_lang_data = {
             "language": "en",
             "name": "English",
@@ -65,7 +59,6 @@ class TestLoader(unittest.TestCase):
             }
         }
         
-        # Create sample user custom data
         self.user_custom_data = {
             "categories": {
                 "my_commands": {
@@ -78,7 +71,6 @@ class TestLoader(unittest.TestCase):
             }
         }
         
-        # Create sample user modified data
         self.user_modified_data = {
             "categories": {
                 "system": {
@@ -90,7 +82,6 @@ class TestLoader(unittest.TestCase):
         }
     
     def tearDown(self):
-        """Tear down test fixtures."""
         self.mock_root_patcher.stop()
         self.mock_config_patcher.stop()
         shutil.rmtree(self.temp_dir)
@@ -211,17 +202,14 @@ class TestLoader(unittest.TestCase):
     def test_merge_commands_with_user_custom(self):
         result = merge_commands(self.valid_lang_data, self.user_custom_data, {})
         
-        # Built-in categories still exist
         self.assertIn("system", result["categories"])
         self.assertIn("network", result["categories"])
         
-        # New custom category added
         self.assertIn("my_commands", result["categories"])
         self.assertEqual(result["categories"]["my_commands"]["name"], "My Commands")
         self.assertIn("mybackup", result["categories"]["my_commands"]["commands"])
         self.assertIn("myclean", result["categories"]["my_commands"]["commands"])
         
-        # Total categories count
         self.assertEqual(len(result["categories"]), 3)
     
     def test_merge_commands_with_user_modified_override(self):
@@ -231,21 +219,17 @@ class TestLoader(unittest.TestCase):
         self.assertEqual(cmd_info["cmd"], "df -h --total")
         self.assertEqual(cmd_info["description"], "Total disk space")
         
-        # Other commands unaffected
         self.assertEqual(result["categories"]["system"]["commands"]["ram"]["cmd"], "free -h")
         self.assertEqual(result["categories"]["network"]["commands"]["ip"]["cmd"], "ip a")
     
     def test_merge_commands_with_both_custom_and_modified(self):
         result = merge_commands(self.valid_lang_data, self.user_custom_data, self.user_modified_data)
         
-        # Modified command overrides built-in
         self.assertEqual(result["categories"]["system"]["commands"]["space"]["cmd"], "df -h --total")
         
-        # Custom command added
         self.assertIn("my_commands", result["categories"])
         self.assertIn("mybackup", result["categories"]["my_commands"]["commands"])
         
-        # Built-in commands still present
         self.assertIn("ram", result["categories"]["system"]["commands"])
         self.assertIn("ip", result["categories"]["network"]["commands"])
     
@@ -321,15 +305,12 @@ class TestLoader(unittest.TestCase):
     def test_find_command_in_merged_data(self):
         merged = merge_commands(self.valid_lang_data, self.user_custom_data, self.user_modified_data)
         
-        # Find built-in command that was modified
         result = find_command("space", merged)
         self.assertEqual(result["cmd"], "df -h --total")
         
-        # Find custom command
         result = find_command("mybackup", merged)
         self.assertEqual(result["cmd"], "rsync -av")
         
-        # Find unchanged built-in command
         result = find_command("ip", merged)
         self.assertEqual(result["cmd"], "ip a")
     

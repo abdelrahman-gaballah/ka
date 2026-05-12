@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 
-"""
-Ka - Easy Linux Commands
-Test module: test_lang_manager.py
-Author: Abdelrahman Gaballah
-"""
+# Author: Abdelrahman Gaballah
 
 import unittest
 import json
@@ -29,10 +25,8 @@ class TestLanguageManager(unittest.TestCase):
         self.temp_dir = tempfile.mkdtemp()
         self.project_root = Path(self.temp_dir)
         
-        # Create mock directories
         (self.project_root / "langs").mkdir()
         
-        # Create mock language files
         self.en_data = {
             "language": "en",
             "name": "English",
@@ -91,7 +85,6 @@ class TestLanguageManager(unittest.TestCase):
             }
         }
         
-        # Write mock language files
         self.en_path = self.project_root / "langs" / "en.json"
         self.ar_path = self.project_root / "langs" / "ar.json"
         self.es_path = self.project_root / "langs" / "es.json"
@@ -109,7 +102,6 @@ class TestLanguageManager(unittest.TestCase):
         with open(self.template_path, 'w', encoding='utf-8') as f:
             json.dump({"language": "TEMPLATE", "name": "Template", "categories": {}}, f)
         
-        # Mock the PROJECT_ROOT
         self.mock_root_patcher = patch('core.lang_manager.PROJECT_ROOT', self.project_root)
         self.mock_root = self.mock_root_patcher.start()
         

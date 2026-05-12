@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 
-"""
-Ka - Easy Linux Commands
-Test module: test_parser.py
-Author: Abdelrahman Gaballah
-"""
+# Author: Abdelrahman Gaballah
 
 import unittest
 import sys
