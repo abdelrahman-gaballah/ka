@@ -1,5 +1,5 @@
 # ☥ ka - Easy Linux Commands
-
+```
 ░██                     
 ░██                     
 ░██    ░██    ░██████   
@@ -7,6 +7,7 @@
 ░███████      ░███████  
 ░██   ░██    ░██   ░██  
 ░██    ░██    ░█████░██ 
+```
 [![GitHub stars](https://img.shields.io/github/stars/abdelrahman-gaballah/ka)](https://github.com/abdelrahman-gaballah/ka/stargazers)
 [![GitHub license](https://img.shields.io/github/license/abdelrahman-gaballah/ka)](https://github.com/abdelrahman-gaballah/ka/blob/main/LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.6%2B-blue)](https://www.python.org/downloads/)
